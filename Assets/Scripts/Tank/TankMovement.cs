@@ -31,6 +31,8 @@ public class TankMovement : MonoBehaviour
     // Object target
     public Transform goal;
 
+    public Transform goal3;
+
 
     private void Awake()
     {

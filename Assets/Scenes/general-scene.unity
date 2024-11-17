@@ -668,7 +668,7 @@ MonoBehaviour:
     m_Wins: 0
     goal: {fileID: 0}
     waypoints: []
-  m_scene: 1
+  m_scene: 2
   waypoints:
   - {fileID: 2038302259}
   - {fileID: 1212153480}

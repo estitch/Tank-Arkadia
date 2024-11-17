@@ -3,87 +3,93 @@ using UnityEngine.UI;
 
 public class TankShooting : MonoBehaviour
 {
-    public int m_PlayerNumber = 1;              // Used to identify the different players.
-    public Rigidbody m_Shell;                   // Prefab of the shell.
-    public Transform m_FireTransform;           // A child of the tank where the shells are spawned.
-    public Slider m_AimSlider;                  // A child of the tank that displays the current launch force.
-    public AudioSource m_ShootingAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
-    public AudioClip m_ChargingClip;            // Audio that plays when each shot is charging up.
-    public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
-    public float m_MinLaunchForce = 15f;        // The force given to the shell if the fire button is not held.
-    public float m_MaxLaunchForce = 30f;        // The force given to the shell if the fire button is held for the max charge time.
-    public float m_MaxChargeTime = 0.75f;       // How long the shell can charge for before it is fired at max force.
+    public int m_PlayerNumber = 1;              // Usado para identificar los diferentes jugadores.
+    public Rigidbody m_Shell;                   // Prefab de la shell.
+    public Transform m_FireTransform;           // Un hijo del tanque donde se generan las shells.
+    public Slider m_AimSlider;                  // Un hijo del tanque que muestra la fuerza de lanzamiento actual.
+    public AudioSource m_ShootingAudio;         // Referencia al audio usado para reproducir el audio de disparo.
+    public AudioClip m_ChargingClip;            // Audio que se reproduce cuando el disparo se está cargando.
+    public AudioClip m_FireClip;                // Audio que se reproduce cuando el disparo es realizado.
+    public float m_MinLaunchForce = 50f;        // La fuerza dada al proyectil si el botón de disparo no está presionado.
+    public float m_MaxLaunchForce = 80f;        // La fuerza dada al proyectil si el botón de disparo está presionado durante el tiempo máximo.
+    public float m_MaxChargeTime = 0.75f;       // El tiempo que el proyectil puede cargarse antes de ser disparado con la máxima fuerza.
 
+    private string m_FireButton;                // El botón de entrada usado para lanzar shells.
+    private float m_CurrentLaunchForce;         // La fuerza que se dará al proyectil cuando se libere el botón de disparo.
+    private float m_ChargeSpeed;                // Qué tan rápido aumenta la fuerza de lanzamiento, basado en el tiempo máximo de carga.
+    private bool m_Fired;                       // Si el proyectil ya ha sido lanzado con esta presión de botón.
 
-    private string m_FireButton;                // The input axis that is used for launching shells.
-    private float m_CurrentLaunchForce;         // The force that will be given to the shell when the fire button is released.
-    private float m_ChargeSpeed;                // How fast the launch force increases, based on the max charge time.
-    private bool m_Fired;                       // Whether or not the shell has been launched with this button press.
-
-    public Transform goal;
+    public Transform goal;                     // El objetivo a seguir (por ejemplo, otro tanque).
     private float fireCooldown = 3f; 
     private float fireTimer = 0f;
 
+    // Variables para el cálculo de la predicción.
+    public float predictionTime = 50f;           // El tiempo en el futuro que se predice la posición del objetivo.
+    public float targetSpeed = 10f;              // La velocidad del objetivo (puede ser ajustable según el juego).
+
     private void OnEnable()
     {
-        // When the tank is turned on, reset the launch force and the UI
+        // Cuando el tanque se enciende, resetea la fuerza de lanzamiento y la UI
         m_CurrentLaunchForce = m_MinLaunchForce;
         m_AimSlider.value = m_MinLaunchForce;
     }
 
-
-    private void Start ()
+    private void Start()
     {
-        // The fire axis is based on the player number.
+        // El eje de disparo se basa en el número de jugador.
         m_FireButton = "Fire" + m_PlayerNumber;
 
-        // The rate that the launch force charges up is the range of possible forces by the max charge time.
+        // La velocidad de carga es el rango de las fuerzas posibles dividido por el tiempo máximo de carga.
         m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
     }
 
-
-    private void Update ()
+    private void Update()
     {
         if (m_PlayerNumber <= 2)
         {
-            // The slider should have a default value of the minimum launch force.
+            // El slider debe tener un valor por defecto de la fuerza mínima de lanzamiento.
             m_AimSlider.value = m_MinLaunchForce;
 
-            // If the max force has been exceeded and the shell hasn't yet been launched...
+            // Si se ha excedido la fuerza máxima y el proyectil aún no ha sido disparado...
             if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired)
             {
-                // ... use the max force and launch the shell.
+                // Usa la fuerza máxima y dispara el proyectil.
                 m_CurrentLaunchForce = m_MaxLaunchForce;
                 Fire();
             }
-            // Otherwise, if the fire button has just started being pressed...
+            // Si el botón de disparo acaba de empezar a ser presionado...
             else if (Input.GetButtonDown(m_FireButton))
             {
-                // ... reset the fired flag and reset the launch force.
+                // Resetea la bandera de disparo y la fuerza de lanzamiento.
                 m_Fired = false;
                 m_CurrentLaunchForce = m_MinLaunchForce;
 
-                // Change the clip to the charging clip and start it playing.
+                // Cambia el clip al de carga y empieza a reproducirlo.
                 m_ShootingAudio.clip = m_ChargingClip;
                 m_ShootingAudio.Play();
             }
-            // Otherwise, if the fire button is being held and the shell hasn't been launched yet...
+            // Si el botón de disparo está siendo mantenido y el proyectil aún no ha sido disparado...
             else if (Input.GetButton(m_FireButton) && !m_Fired)
             {
-                // Increment the launch force and update the slider.
+                // Incrementa la fuerza de lanzamiento y actualiza el slider.
                 m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
 
                 m_AimSlider.value = m_CurrentLaunchForce;
             }
-            // Otherwise, if the fire button is released and the shell hasn't been launched yet...
+            // Si el botón de disparo se suelta y el proyectil aún no ha sido disparado...
             else if (Input.GetButtonUp(m_FireButton) && !m_Fired)
             {
-                // ... launch the shell.
+                // Lanza el proyectil.
                 Fire();
             }
         }
-        else { 
-            Vector3 direction = goal.position - this.transform.position;
+        else
+        { 
+            // Calcular la posición futura del objetivo (predicción)
+            Vector3 predictedPosition = PredictTargetPosition();
+
+            // Asegúrate de que el proyectil se dispare solo cuando esté dentro de un rango adecuado
+            Vector3 direction = predictedPosition - this.transform.position;
             if (direction.magnitude <= 25f)
             {
                 fireTimer += Time.deltaTime;
@@ -96,27 +102,38 @@ public class TankShooting : MonoBehaviour
                 }
             }
         }
-
     }
 
-
-    private void Fire ()
+    private void Fire()
     {
-        // Set the fired flag so only Fire is only called once.
+        // Marca que el proyectil ha sido disparado.
         m_Fired = true;
 
-        // Create an instance of the shell and store a reference to it's rigidbody.
+        // Crea una instancia del proyectil y guarda una referencia a su rigidbody.
         Rigidbody shellInstance =
-            Instantiate (m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
+            Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
 
-        // Set the shell's velocity to the launch force in the fire position's forward direction.
-        shellInstance.velocity = m_CurrentLaunchForce * m_FireTransform.forward; ;
+        // Establece la velocidad del proyectil para que se mueva hacia la posición predicha.
+        Vector3 direction = goal.position - m_FireTransform.position;
+        shellInstance.velocity = m_CurrentLaunchForce * direction.normalized;
 
-        // Change the clip to the firing clip and play it.
+        // Cambia el clip a la reproducción del disparo y empieza a reproducirlo.
         m_ShootingAudio.clip = m_FireClip;
-        m_ShootingAudio.Play ();
+        m_ShootingAudio.Play();
 
-        // Reset the launch force.  This is a precaution in case of missing button events.
+        // Resetear la fuerza de lanzamiento como precaución.
         m_CurrentLaunchForce = m_MinLaunchForce;
+    }
+
+    // Método para predecir la posición futura del objetivo basado en su velocidad y dirección.
+    private Vector3 PredictTargetPosition()
+    {
+        Vector3 targetVelocity = goal.GetComponent<Rigidbody>().velocity;  // Obtener la velocidad del objetivo (tanque enemigo).
+        Vector3 targetDirection = targetVelocity.normalized;               // Dirección de la velocidad.
+
+        // Calcula la posición futura del objetivo considerando su velocidad y un tiempo predicho.
+        Vector3 predictedPosition = goal.position + targetVelocity * predictionTime;
+
+        return predictedPosition;
     }
 }

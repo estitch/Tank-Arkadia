@@ -48,7 +48,13 @@ public class GameManager : MonoBehaviour
             m_Tanks[i].waypoints = waypoints; 
             //m_Tanks[i].go = 
             
-            if (i > 1) {
+            if (i > 1 && i < 5) {
+                m_Tanks[i].goal = m_Tanks[1].m_Instance.transform;
+                print(m_Tanks[i].goal);
+               
+                //m_Tanks[i];
+            }
+            if (i > 4 && i < 8) {
                 m_Tanks[i].goal = m_Tanks[0].m_Instance.transform;
                 print(m_Tanks[i].goal);
                
