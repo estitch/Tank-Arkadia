@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TankShooting : MonoBehaviour
@@ -47,83 +48,83 @@ public class TankShooting : MonoBehaviour
     {
         if (m_PlayerNumber <= 2)
         {
-            // El slider debe tener un valor por defecto de la fuerza mínima de lanzamiento.
+            // Lógica de disparo manual para jugadores controlados
             m_AimSlider.value = m_MinLaunchForce;
 
-            // Si se ha excedido la fuerza máxima y el proyectil aún no ha sido disparado...
             if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired)
             {
-                // Usa la fuerza máxima y dispara el proyectil.
                 m_CurrentLaunchForce = m_MaxLaunchForce;
                 Fire();
             }
-            // Si el botón de disparo acaba de empezar a ser presionado...
             else if (Input.GetButtonDown(m_FireButton))
             {
-                // Resetea la bandera de disparo y la fuerza de lanzamiento.
                 m_Fired = false;
                 m_CurrentLaunchForce = m_MinLaunchForce;
-
-                // Cambia el clip al de carga y empieza a reproducirlo.
                 m_ShootingAudio.clip = m_ChargingClip;
                 m_ShootingAudio.Play();
             }
-            // Si el botón de disparo está siendo mantenido y el proyectil aún no ha sido disparado...
             else if (Input.GetButton(m_FireButton) && !m_Fired)
             {
-                // Incrementa la fuerza de lanzamiento y actualiza el slider.
                 m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
-
                 m_AimSlider.value = m_CurrentLaunchForce;
             }
-            // Si el botón de disparo se suelta y el proyectil aún no ha sido disparado...
             else if (Input.GetButtonUp(m_FireButton) && !m_Fired)
             {
-                // Lanza el proyectil.
                 Fire();
             }
         }
         else
-        { 
-            // Calcular la posición futura del objetivo (predicción)
-            Vector3 predictedPosition = PredictTargetPosition();
-
-            // Asegúrate de que el proyectil se dispare solo cuando esté dentro de un rango adecuado
-            Vector3 direction = predictedPosition - this.transform.position;
-            if (direction.magnitude <= 25f)
+        {
+            // Lógica para tanques controlados por IA
+            if (goal != null)
             {
-                fireTimer += Time.deltaTime;
+                Vector3 direction = goal.position - this.transform.position;
 
-                // Si ha pasado el tiempo suficiente para disparar de nuevo, ejecuta el disparo
-                if (fireTimer >= fireCooldown)
+                if (direction.magnitude <= 25f)
                 {
-                    Fire();            // Dispara
-                    fireTimer = 0f;    // Reinicia el temporizador
+                    fireTimer += Time.deltaTime;
+
+                    if (fireTimer >= fireCooldown)
+                    {
+                        Fire();
+                        fireTimer = 0f;
+                    }
                 }
             }
         }
     }
 
+
     private void Fire()
     {
-        // Marca que el proyectil ha sido disparado.
+        // Set the fired flag so only Fire is only called once.
         m_Fired = true;
 
-        // Crea una instancia del proyectil y guarda una referencia a su rigidbody.
+        // Create an instance of the shell and store a reference to its rigidbody.
         Rigidbody shellInstance =
             Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
 
-        // Establece la velocidad del proyectil para que se mueva hacia la posición predicha.
-        Vector3 direction = goal.position - m_FireTransform.position;
-        shellInstance.velocity = m_CurrentLaunchForce * direction.normalized;
+        // Set the shell's velocity to the launch force in the fire position's forward direction.
+        if (goal != null && m_PlayerNumber > 2)
+        {
+            Vector3 predictiveDirection = (goal.position - this.transform.position).normalized;
+            shellInstance.velocity = m_CurrentLaunchForce * predictiveDirection;
+            Debug.Log("llego: ");
+        }
+        else
+        {
+            // Disparo directo sin predicción
+            shellInstance.velocity = m_CurrentLaunchForce * m_FireTransform.forward;
+        }
 
-        // Cambia el clip a la reproducción del disparo y empieza a reproducirlo.
+        // Change the clip to the firing clip and play it.
         m_ShootingAudio.clip = m_FireClip;
         m_ShootingAudio.Play();
 
-        // Resetear la fuerza de lanzamiento como precaución.
-        m_CurrentLaunchForce = m_MinLaunchForce;
+        // Reset the launch force. This is a precaution in case of missing button events.
+        m_CurrentLaunchForce = m_MaxLaunchForce;
     }
+
 
     // Método para predecir la posición futura del objetivo basado en su velocidad y dirección.
     private Vector3 PredictTargetPosition()

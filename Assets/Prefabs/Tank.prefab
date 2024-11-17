@@ -1225,11 +1225,11 @@ MonoBehaviour:
   m_ShootingAudio: {fileID: 5856157577408595237}
   m_ChargingClip: {fileID: 8300000, guid: c17f124fcdc0f5446a72f793898bd74b, type: 3}
   m_FireClip: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
-  m_MinLaunchForce: 50
-  m_MaxLaunchForce: 80
+  m_MinLaunchForce: 10
+  m_MaxLaunchForce: 30
   m_MaxChargeTime: 0.75
   goal: {fileID: 0}
-  predictionTime: 50
+  predictionTime: 5
   targetSpeed: 10
 --- !u!1 &1223416413424811290
 GameObject:
