@@ -1297,7 +1297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   introText: {fileID: 1966620679}
-  introDisplayTime: 5
+  introDisplayTime: 3
   player: {fileID: 721536336}
   enemyTankPrefab: {fileID: 1223416413424811286, guid: 3c4e8fb2e70285f46b9bc52c3b641a46, type: 3}
   moveSpeed: 5

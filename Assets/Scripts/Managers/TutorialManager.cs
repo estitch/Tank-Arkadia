@@ -16,6 +16,7 @@ public class TutorialManager : MonoBehaviour
     private int currentPhase = 0;     // Fase actual del tutorial.
     private GameObject currentEnemyTank;  // Referencia al tanque enemigo instanciado
     private TankHealth enemyTankHealth;   // Referencia al componente TankHealth del tanque enemigo
+    private bool hasPassedPhase = false;  // Bandera para asegurar que la fase solo pase una vez
 
     private void Awake()
     {
@@ -45,11 +46,11 @@ public class TutorialManager : MonoBehaviour
                 ShowIntroMessage("Usa WASD para moverte");
                 break;
             case 1:
-                ShowIntroMessage("Haz clic izquierdo para disparar y clic derecho para disparo cargado");
+                ShowIntroMessage("Haz clic izquierdo o el ctrl izquiedo para disparar y manten presionado para disparo cargado");
                 StartShootingPhase();
                 break;
             case 2:
-                ShowIntroMessage("Presiona 'Espacio' para disparar");
+                ShowIntroMessage("Ahora recoge los powerup para tener nuevas mejoras");
                 break;
             case 3:
                 ShowIntroMessage("Tutorial completo. ¡Buena suerte!");
@@ -97,7 +98,7 @@ public class TutorialManager : MonoBehaviour
     // Método para la fase 1 (disparo y creación de un tanque enemigo)
     public void StartShootingPhase()
     {
-        ShowIntroMessage("Haz clic izquierdo para disparar y clic derecho para disparo cargado");
+        //ShowIntroMessage("Haz clic izquierdo para disparar y clic derecho para disparo cargado");
 
         // Instanciar un tanque enemigo frente al jugador
         InstantiateEnemyTank();
@@ -106,7 +107,7 @@ public class TutorialManager : MonoBehaviour
     // Instancia un tanque enemigo frente al jugador
     private void InstantiateEnemyTank()
     {
-        Vector3 spawnPosition = player.transform.position + player.transform.forward * 10f; // 10 unidades frente al jugador
+        Vector3 spawnPosition = player.transform.position + player.transform.forward * 15f; // 10 unidades frente al jugador
         currentEnemyTank = Instantiate(enemyTankPrefab, spawnPosition, Quaternion.identity); // Instancia el tanque enemigo y guarda la referencia
 
         // Obtener el componente TankHealth del tanque enemigo
@@ -116,9 +117,10 @@ public class TutorialManager : MonoBehaviour
     // Monitorea si el tanque enemigo ha sido destruido
     private void Update()
     {
-        if (enemyTankHealth != null && enemyTankHealth.IsDead())
+        if (!hasPassedPhase && enemyTankHealth != null && enemyTankHealth.IsDead() )
         {
-            // Si el tanque ha sido destruido, pasa a la siguiente fase
+            hasPassedPhase = true;  // Indicamos que la fase ha sido completada
+            // Si el tanque ha sido destruido y la fase no ha pasado aún, pasa a la siguiente fase
             NextPhase();
         }
     }
