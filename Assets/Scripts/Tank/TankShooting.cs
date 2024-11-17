@@ -149,6 +149,11 @@ public class TankShooting : MonoBehaviour
         currentBullets = Mathf.Clamp(currentBullets, 0, maxBullets);
     }
 
+    public void AddMaxBullets(int amount)
+    {
+        maxBullets = maxBullets + amount;
+    }
+
     public int GetCurrentBullets()
     {
         return currentBullets;

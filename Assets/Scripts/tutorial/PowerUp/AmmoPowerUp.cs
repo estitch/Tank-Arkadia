@@ -9,8 +9,8 @@ public class AmmoPowerUp : PowerUpBase
     {
         if (shooting != null)
         {
-            shooting.AddBullets(ammoIncrease);
-            Debug.Log($"Ammo increased by {ammoIncrease}. Current Ammo: {shooting.GetCurrentBullets()}");
+            shooting.AddMaxBullets(ammoIncrease);
+            Debug.Log($"Ammo max increased by {ammoIncrease}. Current Ammo: {shooting.GetCurrentBullets()}");
         }
     }
 }
