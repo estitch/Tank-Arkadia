@@ -4,7 +4,7 @@ public class TankMovement : MonoBehaviour
 {
     public int m_PlayerNumber = 1;
     public int m_scene = 1;
-    public float m_Speed = 12f;            
+    public float m_Speed = 8f;            
     public float m_TurnSpeed = 180f;       
     public AudioSource m_MovementAudio;    
     public AudioClip m_EngineIdling;       
@@ -131,6 +131,21 @@ public class TankMovement : MonoBehaviour
                 m_MovementAudio.Play();
             }
         }
+    }
+
+    public void IncreaseSpeed(float amount)
+    {
+        m_Speed += amount;
+    }
+
+    public void DecreaseSpeed(float amount)
+    {
+        m_Speed = Mathf.Max(0, m_Speed - amount);
+    }
+
+    public float GetCurrentSpeed()
+    {
+        return m_Speed;
     }
 
 

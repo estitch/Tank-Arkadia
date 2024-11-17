@@ -28,6 +28,10 @@ public class TankShooting : MonoBehaviour
     public float predictionTime = 50f;           // El tiempo en el futuro que se predice la posición del objetivo.
     public float targetSpeed = 10f;              // La velocidad del objetivo (puede ser ajustable según el juego).
 
+    // datos extra para el disparo
+    public int currentBullets = 10;       // Número inicial de balas.
+    public int maxBullets = 20;           // Capacidad máxima de balas.
+    private string bulletType = "Normal";  // Tipo actual de balas.
     private void OnEnable()
     {
         // Cuando el tanque se enciende, resetea la fuerza de lanzamiento y la UI
@@ -51,7 +55,7 @@ public class TankShooting : MonoBehaviour
             // Lógica de disparo manual para jugadores controlados
             m_AimSlider.value = m_MinLaunchForce;
 
-            if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired)
+            if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired && currentBullets > 0)
             {
                 m_CurrentLaunchForce = m_MaxLaunchForce;
                 Fire();
@@ -68,7 +72,7 @@ public class TankShooting : MonoBehaviour
                 m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
                 m_AimSlider.value = m_CurrentLaunchForce;
             }
-            else if (Input.GetButtonUp(m_FireButton) && !m_Fired)
+            else if (Input.GetButtonUp(m_FireButton) && !m_Fired && currentBullets > 0)
             {
                 Fire();
             }
@@ -84,7 +88,7 @@ public class TankShooting : MonoBehaviour
                 {
                     fireTimer += Time.deltaTime;
 
-                    if (fireTimer >= fireCooldown)
+                    if (fireTimer >= fireCooldown && currentBullets > 0)
                     {
                         Fire();
                         fireTimer = 0f;
@@ -97,6 +101,13 @@ public class TankShooting : MonoBehaviour
 
     private void Fire()
     {
+
+        if (currentBullets <= 0)
+        {
+            Debug.Log("Sin balas para disparar.");
+            return;
+        }
+
         // Set the fired flag so only Fire is only called once.
         m_Fired = true;
 
@@ -123,8 +134,40 @@ public class TankShooting : MonoBehaviour
 
         // Reset the launch force. This is a precaution in case of missing button events.
         m_CurrentLaunchForce = m_MaxLaunchForce;
+
+        currentBullets--;
+
+    }
+    public void AddBullets(int amount)
+    {
+        currentBullets = Mathf.Clamp(currentBullets + amount, 0, maxBullets);
     }
 
+    public void SetMaxBullets(int newMax)
+    {
+        maxBullets = newMax;
+        currentBullets = Mathf.Clamp(currentBullets, 0, maxBullets);
+    }
+
+    public int GetCurrentBullets()
+    {
+        return currentBullets;
+    }
+
+    public int GetMaxBullets()
+    {
+        return maxBullets;
+    }
+
+    public string GetBulletType()
+    {
+        return bulletType;
+    }
+
+    public void SetBulletType(string newType)
+    {
+        bulletType = newType;
+    }
 
     // Método para predecir la posición futura del objetivo basado en su velocidad y dirección.
     private Vector3 PredictTargetPosition()
