@@ -73,8 +73,8 @@ public class TankMovement : MonoBehaviour
         // Store the player's input and make sure the audio for the engine is playing.
         if (m_PlayerNumber <= 2)
         {
-            print(m_MovementAxisName);
-            print(m_TurnAxisName);
+            //print(m_MovementAxisName);
+            //print(m_TurnAxisName);
             m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
             m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
 
