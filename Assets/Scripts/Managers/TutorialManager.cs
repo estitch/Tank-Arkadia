@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;  // Necesario para trabajar con UI
+using UnityEngine.UI;
 using System.Collections;  // Necesario para trabajar con IEnumerator y corutinas
 
 public class TutorialManager : MonoBehaviour
@@ -9,10 +9,13 @@ public class TutorialManager : MonoBehaviour
     public Text introText;            // El texto de introducción a mostrar.
     public float introDisplayTime = 5f;  // Tiempo que el texto permanecerá visible (5 segundos).
     public GameObject player;         // El jugador o tanque a mover.
+    public GameObject enemyTankPrefab;  // Prefab del tanque enemigo a instanciar.
     public float moveSpeed = 5f;      // Velocidad de movimiento del jugador.
 
     private bool canMove = false;     // Determina si el jugador puede moverse.
     private int currentPhase = 0;     // Fase actual del tutorial.
+    private GameObject currentEnemyTank;  // Referencia al tanque enemigo instanciado
+    private TankHealth enemyTankHealth;   // Referencia al componente TankHealth del tanque enemigo
 
     private void Awake()
     {
@@ -42,7 +45,8 @@ public class TutorialManager : MonoBehaviour
                 ShowIntroMessage("Usa WASD para moverte");
                 break;
             case 1:
-                ShowIntroMessage("Ahora, usa el mouse para mirar alrededor");
+                ShowIntroMessage("Haz clic izquierdo para disparar y clic derecho para disparo cargado");
+                StartShootingPhase();
                 break;
             case 2:
                 ShowIntroMessage("Presiona 'Espacio' para disparar");
@@ -87,6 +91,35 @@ public class TutorialManager : MonoBehaviour
         else
         {
             Debug.Log("Tutorial completado.");
+        }
+    }
+
+    // Método para la fase 1 (disparo y creación de un tanque enemigo)
+    public void StartShootingPhase()
+    {
+        ShowIntroMessage("Haz clic izquierdo para disparar y clic derecho para disparo cargado");
+
+        // Instanciar un tanque enemigo frente al jugador
+        InstantiateEnemyTank();
+    }
+
+    // Instancia un tanque enemigo frente al jugador
+    private void InstantiateEnemyTank()
+    {
+        Vector3 spawnPosition = player.transform.position + player.transform.forward * 10f; // 10 unidades frente al jugador
+        currentEnemyTank = Instantiate(enemyTankPrefab, spawnPosition, Quaternion.identity); // Instancia el tanque enemigo y guarda la referencia
+
+        // Obtener el componente TankHealth del tanque enemigo
+        enemyTankHealth = currentEnemyTank.GetComponent<TankHealth>();
+    }
+
+    // Monitorea si el tanque enemigo ha sido destruido
+    private void Update()
+    {
+        if (enemyTankHealth != null && enemyTankHealth.IsDead())
+        {
+            // Si el tanque ha sido destruido, pasa a la siguiente fase
+            NextPhase();
         }
     }
 }

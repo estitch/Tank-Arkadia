@@ -676,6 +676,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 927247432, guid: 2352d5c5f848757458b2a55b871f8379, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1136006142, guid: 2352d5c5f848757458b2a55b871f8379, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -731,6 +735,14 @@ PrefabInstance:
     - target: {fileID: 1223416413425164534, guid: 2352d5c5f848757458b2a55b871f8379, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432617090433674745, guid: 2352d5c5f848757458b2a55b871f8379, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432617091042494383, guid: 2352d5c5f848757458b2a55b871f8379, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1285,8 +1297,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   introText: {fileID: 1966620679}
-  introDisplayTime: 3
+  introDisplayTime: 5
   player: {fileID: 721536336}
+  enemyTankPrefab: {fileID: 1223416413424811286, guid: 3c4e8fb2e70285f46b9bc52c3b641a46, type: 3}
   moveSpeed: 5
 --- !u!4 &1247037318
 Transform:
