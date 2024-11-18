@@ -11,6 +11,13 @@ public class HealingPowerUp : PowerUpBase
         {
             health.Heal(healAmount);
             Debug.Log($"Healed for {healAmount}. Current Health: {health.GetCurrentHealth()}");
+
+
+            // Actualiza solo la sección de salud del HUD.
+            //if (hudManager != null)
+            //{
+            //    hudManager.UpdateHealth(health);
+            //}
         }
     }
 }

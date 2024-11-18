@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;  // Necesario para trabajar con IEnumerator y corutinas
+using System.Collections;
 
 public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager Instance { get; private set; }
 
     public Text introText;            // El texto de introducción a mostrar.
-    public float introDisplayTime = 5f;  // Tiempo que el texto permanecerá visible (5 segundos).
+    public float introDisplayTime = 5f;  // Tiempo que el texto permanecerá visible.
     public GameObject player;         // El jugador o tanque a mover.
     public GameObject enemyTankPrefab;  // Prefab del tanque enemigo a instanciar.
+    public GameObject tankHUDCanvas;  // Canvas que muestra los atributos del tanque.
     public float moveSpeed = 5f;      // Velocidad de movimiento del jugador.
 
     private bool canMove = false;     // Determina si el jugador puede moverse.
@@ -33,13 +34,17 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
+        // Asegurarse de que el HUD esté desactivado al inicio
+        if (tankHUDCanvas != null)
+        {
+            tankHUDCanvas.SetActive(false);
+        }
+
         StartPhase(currentPhase);  // Inicia la primera fase del tutorial.
     }
 
-    // Método para iniciar una fase específica
     private void StartPhase(int phase)
     {
-        // Ejecuta la fase correspondiente.
         switch (phase)
         {
             case 0:
@@ -51,6 +56,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case 2:
                 ShowIntroMessage("Ahora recoge los powerup para tener nuevas mejoras");
+                ActivateHUD(); // Activar el HUD en la fase 3
                 break;
             case 3:
                 ShowIntroMessage("Tutorial completo. ¡Buena suerte!");
@@ -61,33 +67,30 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    // Muestra el mensaje de la fase y espera el tiempo determinado antes de pasar a la siguiente fase
     private void ShowIntroMessage(string message)
     {
         introText.text = message;
-        introText.gameObject.SetActive(true);  // Asegura que el texto esté visible
+        introText.gameObject.SetActive(true);
 
-        // Inicia la corutina para ocultar el mensaje después de 5 segundos, pero no avanza a la siguiente fase.
+        // Inicia la corutina para ocultar el mensaje después de un tiempo.
         StartCoroutine(HideIntroTextAfterTime(introDisplayTime));
     }
 
     private IEnumerator HideIntroTextAfterTime(float time)
     {
-        yield return new WaitForSeconds(time);  // Espera el tiempo especificado
+        yield return new WaitForSeconds(time);
 
-        introText.gameObject.SetActive(false);  // Oculta el mensaje
-
-        // Permite al jugador moverse solo después de que el mensaje se haya ocultado
-        canMove = true;
+        introText.gameObject.SetActive(false);
+        canMove = true; // Permitir movimiento después del mensaje
     }
 
     public void NextPhase()
     {
-        if (currentPhase < 3)  // Si no hemos alcanzado la última fase
+        if (currentPhase < 3) // Si no hemos alcanzado la última fase
         {
-            currentPhase++;  // Incrementamos la fase
-            StartPhase(currentPhase);  // Iniciamos la siguiente fase
-            canMove = false;  // Desactivamos el movimiento hasta que se muestre el siguiente mensaje
+            currentPhase++;
+            StartPhase(currentPhase);
+            canMove = false; // Desactivamos el movimiento hasta que se muestre el siguiente mensaje
         }
         else
         {
@@ -95,33 +98,45 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    // Método para la fase 1 (disparo y creación de un tanque enemigo)
     public void StartShootingPhase()
     {
-        //ShowIntroMessage("Haz clic izquierdo para disparar y clic derecho para disparo cargado");
-
-        // Instanciar un tanque enemigo frente al jugador
         InstantiateEnemyTank();
     }
 
-    // Instancia un tanque enemigo frente al jugador
     private void InstantiateEnemyTank()
     {
-        Vector3 spawnPosition = player.transform.position + player.transform.forward * 15f; // 10 unidades frente al jugador
-        currentEnemyTank = Instantiate(enemyTankPrefab, spawnPosition, Quaternion.identity); // Instancia el tanque enemigo y guarda la referencia
+        Vector3 spawnPosition = player.transform.position + player.transform.forward * 15f;
+        currentEnemyTank = Instantiate(enemyTankPrefab, spawnPosition, Quaternion.identity);
 
-        // Obtener el componente TankHealth del tanque enemigo
         enemyTankHealth = currentEnemyTank.GetComponent<TankHealth>();
     }
 
-    // Monitorea si el tanque enemigo ha sido destruido
     private void Update()
     {
-        if (!hasPassedPhase && enemyTankHealth != null && enemyTankHealth.IsDead() )
+        if (!hasPassedPhase && enemyTankHealth != null && enemyTankHealth.IsDead())
         {
-            hasPassedPhase = true;  // Indicamos que la fase ha sido completada
-            // Si el tanque ha sido destruido y la fase no ha pasado aún, pasa a la siguiente fase
+            hasPassedPhase = true;
             NextPhase();
         }
     }
+
+    private void ActivateHUD()
+    {
+        Debug.Log("Inicio la fase 3");
+        if (tankHUDCanvas != null)
+        {
+            tankHUDCanvas.SetActive(true);
+
+            // Opcional: inicializar atributos desde el TutorialManager si es necesario
+            TankStats.Instance.Health = 100; // Ejemplo
+            TankStats.Instance.Speed = 5f;
+            TankStats.Instance.Ammo = 9;
+            TankStats.Instance.MaxAmmo = 20;
+        }
+        else
+        {
+            Debug.LogWarning("Tank HUD Canvas no está asignado en el TutorialManager.");
+        }
+    }
+
 }

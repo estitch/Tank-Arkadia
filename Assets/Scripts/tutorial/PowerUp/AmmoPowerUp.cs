@@ -11,6 +11,12 @@ public class AmmoPowerUp : PowerUpBase
         {
             shooting.AddMaxBullets(ammoIncrease);
             Debug.Log($"Ammo max increased by {ammoIncrease}. Current Ammo: {shooting.GetCurrentBullets()}");
+
+            //// Actualiza solo la sección de velocidad del HUD.
+            //if (hudManager != null)
+            //{
+            //    hudManager.UpdateShooting(shooting);
+            //}
         }
     }
 }

@@ -11,6 +11,13 @@ public class SpeedPowerUp : PowerUpBase
         {
             movement.IncreaseSpeed(speedBoost);
             Debug.Log($"Speed increased by {speedBoost}. Current Speed: {movement.GetCurrentSpeed()}");
+
+
+            // Actualiza solo la sección de velocidad del HUD.
+            //if (hudManager != null)
+            //{
+            //    hudManager.UpdateSpeed(movement);
+            //}
         }
     }
 }
