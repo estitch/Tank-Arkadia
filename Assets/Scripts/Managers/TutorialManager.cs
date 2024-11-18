@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using TMPro.Examples;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -18,6 +20,10 @@ public class TutorialManager : MonoBehaviour
     private GameObject currentEnemyTank;  // Referencia al tanque enemigo instanciado
     private TankHealth enemyTankHealth;   // Referencia al componente TankHealth del tanque enemigo
     private bool hasPassedPhase = false;  // Bandera para asegurar que la fase solo pase una vez
+
+    public List<GameObject> powerUpPrefabs;       // Lista de prefabs de power-ups.
+    public List<Transform> powerUpPositions;      // Lista de posiciones para los power-ups.
+    public List<GameObject> activePowerUps = new List<GameObject>(); // Lista de power-ups activos
 
     private void Awake()
     {
@@ -43,6 +49,8 @@ public class TutorialManager : MonoBehaviour
         StartPhase(currentPhase);  // Inicia la primera fase del tutorial.
     }
 
+
+
     private void StartPhase(int phase)
     {
         switch (phase)
@@ -57,6 +65,8 @@ public class TutorialManager : MonoBehaviour
             case 2:
                 ShowIntroMessage("Ahora recoge los powerup para tener nuevas mejoras");
                 ActivateHUD(); // Activar el HUD en la fase 3
+                InstantiatePowerUps(); // Instanciar los power-ups
+
                 break;
             case 3:
                 ShowIntroMessage("Tutorial completo. ¡Buena suerte!");
@@ -118,6 +128,12 @@ public class TutorialManager : MonoBehaviour
             hasPassedPhase = true;
             NextPhase();
         }
+
+        // Verificar si todos los power-ups han sido recogidos
+        if (currentPhase == 2 && activePowerUps.Count == 0)
+        {
+            NextPhase();  // Si todos los power-ups han sido recogidos, avanzar a la siguiente fase
+        }
     }
 
     private void ActivateHUD()
@@ -136,6 +152,41 @@ public class TutorialManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Tank HUD Canvas no está asignado en el TutorialManager.");
+        }
+    }
+
+    // Instancia los power-ups en las posiciones especificadas
+    private void InstantiatePowerUps()
+    {
+        if (powerUpPrefabs.Count != powerUpPositions.Count)
+        {
+            Debug.LogWarning("El número de power-ups no coincide con el número de posiciones.");
+            return;
+        }
+
+        for (int i = 0; i < powerUpPrefabs.Count; i++)
+        {
+            GameObject powerUp = Instantiate(powerUpPrefabs[i], powerUpPositions[i].position, Quaternion.identity);
+            activePowerUps.Add(powerUp);
+
+            // Aquí puedes agregar lógica adicional si deseas que los power-ups tengan un comportamiento específico al ser recogidos
+            PowerUpBase powerUpScript = powerUp.GetComponent<PowerUpBase>();
+            if (powerUpScript != null)
+            {
+                Debug.Log("El powerup eliminado "+powerUpScript);
+
+                powerUpScript.OnPowerUpCollected += OnPowerUpCollected;
+            }
+        }
+    }
+    // Callback cuando un power-up ha sido recogido
+    private void OnPowerUpCollected(GameObject powerUp)
+    {
+        // Elimina el power-up recogido de la lista activa
+        if (activePowerUps.Contains(powerUp))
+        {
+            activePowerUps.Remove(powerUp);
+            Destroy(powerUp);  // Destruye el power-up recogido
         }
     }
 

@@ -1,11 +1,13 @@
 using UnityEngine;
+using System;
 
 public abstract class PowerUpBase : MonoBehaviour
 {
     [Header("Power-Up Settings")]
     public float duration = 0f; // Duración del efecto, 0 si es instantáneo.
 
-    public TankHUDManager hudManager;
+    //public TankHUDManager hudManager;
+    public event Action<GameObject> OnPowerUpCollected;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -19,6 +21,7 @@ public abstract class PowerUpBase : MonoBehaviour
 
             // Aplica el efecto correspondiente.
             ApplyEffect(tankHealth, tankMovement, tankShooting);
+            OnPowerUpCollected?.Invoke(gameObject);  // Llama al evento, pasando el power-up que fue recogido
 
             // Maneja la recogida del power-up.
             OnPickup();
