@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;  // Necesario para trabajar con UI
-
-//using TMPro;
+using UnityEngine.UI;
 
 public class CheckpointController : MonoBehaviour
 {
@@ -11,33 +9,43 @@ public class CheckpointController : MonoBehaviour
     public int totalCheckpoints = 5; // Número total de checkpoints
     private int checkpointsReached = 0; // Contador de checkpoints alcanzados
 
-    // Referencias a los textos de TextMeshPro
+    // Referencias a los textos de UI
     public Text checkpointsTextdescription;  // Texto para describir.
     public Text checkpointsText;  // Texto para "0/5", "1/5", etc.
     public Text totalCheckpointsText; // Texto fijo para mostrar el total "/5"
+
+    // Referencias a los Canvas
+    public Canvas canvasMovimiento;    // Canvas que muestra los controles y progreso
+    public Canvas canvasFinal;         // Canvas que se muestra al completar la fase
 
     private void Awake()
     {
         // Configuración del Singleton
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); // Si ya existe una instancia, destruye esta
+            Destroy(gameObject);
             return;
         }
 
-        Instance = this; // Asignar esta instancia como el Singleton
-        DontDestroyOnLoad(gameObject); // Evitar que el objeto se destruya al cambiar de escena
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
         // Inicializar textos
         UpdateCheckpointText();
+
+        // Asegurarse de que el Canvas final esté inicialmente oculto
+        if (canvasFinal != null)
+        {
+            canvasFinal.gameObject.SetActive(false);
+        }
     }
 
     public void CheckpointReached()
     {
-        checkpointsReached++; // Incrementa el contador
+        checkpointsReached++;
 
         Debug.Log($"Checkpoint alcanzado: {checkpointsReached}/{totalCheckpoints}");
 
@@ -47,7 +55,7 @@ public class CheckpointController : MonoBehaviour
         // Verifica si se han alcanzado todos los checkpoints
         if (checkpointsReached >= totalCheckpoints)
         {
-            CompletePhase(); // Llama al método para completar la fase
+            CompletePhase();
         }
     }
 
@@ -56,12 +64,12 @@ public class CheckpointController : MonoBehaviour
         // Actualiza los textos para reflejar el progreso
         if (checkpointsText != null)
         {
-            checkpointsText.text = checkpointsReached.ToString(); // Muestra los checkpoints alcanzados
+            checkpointsText.text = checkpointsReached.ToString();
         }
 
         if (totalCheckpointsText != null)
         {
-            totalCheckpointsText.text = $"/{totalCheckpoints}"; // Muestra el total de checkpoints
+            totalCheckpointsText.text = $"/{totalCheckpoints}";
         }
     }
 
@@ -69,22 +77,30 @@ public class CheckpointController : MonoBehaviour
     {
         Debug.Log("Todos los checkpoints alcanzados. Fase completada.");
 
-        // Desactiva los textos al completar la fase
+        // Ocultar CanvasMovimiento y mostrar CanvasFinal
+        if (canvasMovimiento != null)
+        {
+            canvasMovimiento.gameObject.SetActive(false); // Oculta Canvas de movimiento
+        }
+
+        if (canvasFinal != null)
+        {
+            canvasFinal.gameObject.SetActive(true); // Muestra el Canvas final
+        }
+
+        // Opcional: desactivar textos de progreso
         if (checkpointsText != null)
             checkpointsText.gameObject.SetActive(false);
 
         if (totalCheckpointsText != null)
             totalCheckpointsText.gameObject.SetActive(false);
 
-        if(checkpointsTextdescription != null)
+        if (checkpointsTextdescription != null)
             checkpointsTextdescription.gameObject.SetActive(false);
-
-        // Notifica al tutorial manager que la fase está completa
-        TutorialManager.Instance.NextPhase();
     }
 
     public int GetRemainingCheckpoints()
     {
-        return totalCheckpoints - checkpointsReached; // Devuelve la cantidad de checkpoints restantes
+        return totalCheckpoints - checkpointsReached;
     }
 }
