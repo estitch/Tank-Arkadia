@@ -32,7 +32,7 @@ public class TankHUDManager : MonoBehaviour
             float maxHealth = Mathf.Round(tankHealth.GetMaxHealth());
 
             // Actualiza el texto de la salud
-            healthText.text = $"Salud: {currentHealth} / {maxHealth}";
+            healthText.text = $"{currentHealth} / {maxHealth}";
             Debug.Log($"Actualización de salud: {currentHealth} / {maxHealth}");
         }
     }
@@ -45,7 +45,7 @@ public class TankHUDManager : MonoBehaviour
             float currentSpeed = Mathf.Round(tankMovement.GetCurrentSpeed());
 
             // Actualiza el texto de la velocidad
-            speedText.text = $"Velocidad: {currentSpeed}";
+            speedText.text = $"{currentSpeed}";
             Debug.Log($"Actualización de velocidad: {currentSpeed}");
         }
     }
@@ -59,7 +59,7 @@ public class TankHUDManager : MonoBehaviour
             int maxBullets = Mathf.RoundToInt(tankShooting.GetMaxBullets());
 
             // Actualiza el texto de las balas
-            bulletsText.text = $"Balas: {currentBullets} / {maxBullets}";
+            bulletsText.text = $"{currentBullets} / {maxBullets}";
             Debug.Log($"Actualización de balas: {currentBullets} / {maxBullets}");
         }
     }
