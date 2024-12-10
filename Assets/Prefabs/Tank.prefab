@@ -891,6 +891,7 @@ GameObject:
   - component: {fileID: 224017908087590572}
   - component: {fileID: 224017908087590566}
   - component: {fileID: 1423450393548321381}
+  - component: {fileID: 2562610854619359360}
   m_Layer: 9
   m_Name: Tank
   m_TagString: Untagged
@@ -1206,6 +1207,7 @@ MonoBehaviour:
   m_FullHealthColor: {r: 0, g: 1, b: 0, a: 1}
   m_ZeroHealthColor: {r: 1, g: 0, b: 0, a: 1}
   m_ExplosionPrefab: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 3}
+  m_CurrentHealth: 100
 --- !u!114 &1423450393548321381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1231,6 +1233,20 @@ MonoBehaviour:
   goal: {fileID: 0}
   predictionTime: 5
   targetSpeed: 10
+  currentBullets: 10
+  maxBullets: 20
+--- !u!114 &2562610854619359360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223416413424811286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63fd1d2cee59cbb429e9f5714b81a70c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1223416413424811290
 GameObject:
   m_ObjectHideFlags: 0
