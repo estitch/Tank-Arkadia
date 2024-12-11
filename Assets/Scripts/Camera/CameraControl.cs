@@ -42,6 +42,9 @@ public class CameraControl : MonoBehaviour
 
         for (int i = 0; i < m_Targets.Length; i++)
         {
+            if (m_Targets[i] == null) // Verificar si el objeto ha sido destruido
+                continue;
+
             if (!m_Targets[i].gameObject.activeSelf)
                 continue;
 
@@ -56,6 +59,7 @@ public class CameraControl : MonoBehaviour
 
         m_DesiredPosition = averagePos;
     }
+
 
 
     private void Zoom()
@@ -73,6 +77,9 @@ public class CameraControl : MonoBehaviour
 
         for (int i = 0; i < m_Targets.Length; i++)
         {
+            if (m_Targets[i] == null) // Verificar si el objeto ha sido destruido
+                continue;
+
             if (!m_Targets[i].gameObject.activeSelf)
                 continue;
 
@@ -80,17 +87,16 @@ public class CameraControl : MonoBehaviour
 
             Vector3 desiredPosToTarget = targetLocalPos - desiredLocalPos;
 
-            size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.y));
-
-            size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.x) / m_Camera.aspect);
+            size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.y));
+            size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.x) / m_Camera.aspect);
         }
-        
-        size += m_ScreenEdgeBuffer;
 
+        size += m_ScreenEdgeBuffer;
         size = Mathf.Max(size, m_MinSize);
 
         return size;
     }
+
 
 
     public void SetStartPositionAndSize()

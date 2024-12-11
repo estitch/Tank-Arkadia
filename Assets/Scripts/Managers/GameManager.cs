@@ -37,33 +37,45 @@ public class GameManager : MonoBehaviour
 
     private void SpawnAllTanks()
     {
-        // For all the tanks...
         for (int i = 0; i < m_Tanks.Length; i++)
         {
-            // ... create them, set their player number and references needed for control.
-            m_Tanks[i].m_Instance =
-                Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
-            m_Tanks[i].m_PlayerNumber = i + 1;
-            m_Tanks[i].m_scene = m_scene;
-            m_Tanks[i].waypoints = waypoints; 
-            //m_Tanks[i].go = 
-            
-            if (i > 1 && i < 5) {
-                m_Tanks[i].goal = m_Tanks[1].m_Instance.transform;
-                print(m_Tanks[i].goal);
-               
-                //m_Tanks[i];
-            }
-            if (i > 4 && i < 8) {
-                m_Tanks[i].goal = m_Tanks[0].m_Instance.transform;
-                print(m_Tanks[i].goal);
-               
-                //m_Tanks[i];
+            if (m_TankPrefab == null)
+            {
+                Debug.LogError("El prefab del tanque (m_TankPrefab) no está asignado.");
+                continue;
             }
 
+            m_Tanks[i].m_Instance = Instantiate(
+                m_TankPrefab,
+                m_Tanks[i].m_SpawnPoint.position,
+                m_Tanks[i].m_SpawnPoint.rotation
+            );
+
+            if (m_Tanks[i].m_Instance == null)
+            {
+                Debug.LogError($"No se pudo instanciar el tanque en el índice {i}.");
+                continue;
+            }
+
+            m_Tanks[i].m_PlayerNumber = i + 1;
+            m_Tanks[i].m_scene = m_scene;
+            m_Tanks[i].waypoints = waypoints;
+
+            // Asigna objetivos según el índice.
+            if (i > 1 && i < 5)
+            {
+                m_Tanks[i].goal = m_Tanks[1].m_Instance.transform;
+            }
+            else if (i > 4 && i < 8)
+            {
+                m_Tanks[i].goal = m_Tanks[0].m_Instance.transform;
+            }
+
+            // Configura el tanque.
             m_Tanks[i].Setup();
         }
     }
+
 
 
     private void SetCameraTargets()
