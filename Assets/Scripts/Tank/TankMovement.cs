@@ -4,11 +4,11 @@ public class TankMovement : MonoBehaviour
 {
     public int m_PlayerNumber = 1;
     public int m_scene = 1;
-    public float m_Speed = 8f;            
-    public float m_TurnSpeed = 180f;       
-    public AudioSource m_MovementAudio;    
-    public AudioClip m_EngineIdling;       
-    public AudioClip m_EngineDriving;      
+    public float m_Speed = 8f;
+    public float m_TurnSpeed = 180f;
+    public AudioSource m_MovementAudio;
+    public AudioClip m_EngineIdling;
+    public AudioClip m_EngineDriving;
     public float m_PitchRange = 0.2f;
 
     //new
@@ -17,11 +17,11 @@ public class TankMovement : MonoBehaviour
     public float rotSpeed = 10.0f;
     public float lookAhead = 10.0f;
 
-    private string m_MovementAxisName;     
-    private string m_TurnAxisName;         
-    private Rigidbody m_Rigidbody;         
-    private float m_MovementInputValue;    
-    private float m_TurnInputValue;        
+    private string m_MovementAxisName;
+    private string m_TurnAxisName;
+    private Rigidbody m_Rigidbody;
+    private float m_MovementInputValue;
+    private float m_TurnInputValue;
     private float m_OriginalPitch;
 
     //NPC
@@ -40,7 +40,7 @@ public class TankMovement : MonoBehaviour
     }
 
 
-    private void OnEnable ()
+    private void OnEnable()
     {
         m_Rigidbody.isKinematic = false;
         m_MovementInputValue = 0f;
@@ -48,7 +48,7 @@ public class TankMovement : MonoBehaviour
     }
 
 
-    private void OnDisable ()
+    private void OnDisable()
     {
         m_Rigidbody.isKinematic = true;
     }
@@ -82,7 +82,8 @@ public class TankMovement : MonoBehaviour
 
             EngineAudio();
         }
-        else if (m_scene == 2) {
+        else if (m_scene == 2)
+        {
             if (Vector3.Distance(this.transform.position, waypoints[currentWP].transform.position) < 3) currentWP++;
             if (currentWP >= waypoints.Length) currentWP = 0;
             Quaternion lookatWP = Quaternion.LookRotation(waypoints[currentWP].transform.position - this.transform.position);
@@ -109,15 +110,15 @@ public class TankMovement : MonoBehaviour
     private void EngineAudio()
     {
         // If there is no input (the tank is stationary)...
-        if (Mathf.Abs (m_MovementInputValue) < 0.1f && Mathf.Abs (m_TurnInputValue) < 0.1f)
+        if (Mathf.Abs(m_MovementInputValue) < 0.1f && Mathf.Abs(m_TurnInputValue) < 0.1f)
         {
             // ... and if the audio source is currently playing the driving clip...
             if (m_MovementAudio.clip == m_EngineDriving)
             {
                 // ... change the clip to idling and play it.
                 m_MovementAudio.clip = m_EngineIdling;
-                m_MovementAudio.pitch = Random.Range (m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
-                m_MovementAudio.Play ();
+                m_MovementAudio.pitch = Random.Range(m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
+                m_MovementAudio.Play();
             }
         }
         else
@@ -152,8 +153,8 @@ public class TankMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Move and turn the tank.
-        Move ();
-        Turn ();
+        Move();
+        Turn();
     }
 
 
@@ -171,13 +172,13 @@ public class TankMovement : MonoBehaviour
     private void Turn()
     {
         // Adjust the rotation of the tank based on the player's input.
-         // Determine the number of degrees to be turned based on the input, speed and time between frames.
+        // Determine the number of degrees to be turned based on the input, speed and time between frames.
         float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
 
         // Make this into a rotation in the y axis.
-        Quaternion turnRotation = Quaternion.Euler (0f, turn, 0f);
+        Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
 
         // Apply this rotation to the rigidbody's rotation.
-        m_Rigidbody.MoveRotation (m_Rigidbody.rotation * turnRotation);
+        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
     }
 }

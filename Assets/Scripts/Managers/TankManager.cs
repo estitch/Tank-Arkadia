@@ -19,19 +19,33 @@ public class TankManager
     [HideInInspector] public Transform goal;
     [HideInInspector] public GameObject[] waypoints;
 
-    private TankMovement m_Movement;                        // Reference to tank's movement script, used to disable and enable control.
+    public TankMovement m_Movement; // Reemplaza "TankMovement" por el tipo correcto
+                                    // Reference to tank's movement script, used to disable and enable control.
     private TankShooting m_Shooting;                        // Reference to tank's shooting script, used to disable and enable control.
     private GameObject m_CanvasGameObject;                  // Used to disable the world space UI during the Starting and Ending phases of each round.
 
 
-    public void Setup ()
+    public void Setup()
     {
-        // Get references to the components.
-        m_Movement = m_Instance.GetComponent<TankMovement> ();
-        m_Shooting = m_Instance.GetComponent<TankShooting> ();
-        m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas> ().gameObject;
+        m_Movement = m_Instance.GetComponent<TankMovement>();
+        m_Shooting = m_Instance.GetComponent<TankShooting>();
+        m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>()?.gameObject;
 
-        // Set the player numbers to be consistent across the scripts.
+        if (m_Movement == null)
+        {
+            Debug.LogError($"TankMovement no encontrado en {m_Instance.name}");
+        }
+
+        if (m_Shooting == null)
+        {
+            Debug.LogError($"TankShooting no encontrado en {m_Instance.name}");
+        }
+
+        if (m_CanvasGameObject == null)
+        {
+            Debug.LogError($"Canvas no encontrado en {m_Instance.name}");
+        }
+
         m_Movement.m_PlayerNumber = m_PlayerNumber;
         m_Shooting.m_PlayerNumber = m_PlayerNumber;
 
@@ -41,19 +55,15 @@ public class TankManager
         m_Movement.m_scene = m_scene;
         m_Movement.waypoints = waypoints;
 
-        // Create a string using the correct color that says 'PLAYER 1' etc based on the tank's color and the player's number.
         m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + ">PLAYER " + m_PlayerNumber + "</color>";
 
-        // Get all of the renderers of the tank.
-        MeshRenderer[] renderers = m_Instance.GetComponentsInChildren<MeshRenderer> ();
-
-        // Go through all the renderers...
-        for (int i = 0; i < renderers.Length; i++)
+        MeshRenderer[] renderers = m_Instance.GetComponentsInChildren<MeshRenderer>();
+        foreach (var renderer in renderers)
         {
-            // ... set their material color to the color specific to this tank.
-            renderers[i].material.color = m_PlayerColor;
+            renderer.material.color = m_PlayerColor;
         }
     }
+
 
 
     // Used during the phases of the game where the player shouldn't be able to control their tank.
@@ -67,13 +77,22 @@ public class TankManager
 
 
     // Used during the phases of the game where the player should be able to control their tank.
-    public void EnableControl ()
+    public void EnableControl()
     {
+        if (m_Movement == null || m_Shooting == null || m_CanvasGameObject == null)
+        {
+            Debug.LogError($"EnableControl falló: Componentes no inicializados en {m_Instance.name}");
+            return;
+        }
+
+        Debug.Log($"EnableControl llamado por: {System.Environment.StackTrace}");
+
         m_Movement.enabled = true;
         m_Shooting.enabled = true;
-
-        m_CanvasGameObject.SetActive (true);
+        m_CanvasGameObject.SetActive(true);
     }
+
+
 
 
     // Used at the start of each round to put the tank into it's default state.
