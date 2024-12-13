@@ -10,6 +10,7 @@ public class TankShooting : MonoBehaviour
     public Slider m_AimSlider;                  // Un hijo del tanque que muestra la fuerza de lanzamiento actual.
     public AudioSource m_ShootingAudio;         // Referencia al audio usado para reproducir el audio de disparo.
     public AudioClip m_ChargingClip;            // Audio que se reproduce cuando el disparo se está cargando.
+    public int m_scene = 1;
     public AudioClip m_FireClip;                // Audio que se reproduce cuando el disparo es realizado.
     public float m_MinLaunchForce = 50f;        // La fuerza dada al proyectil si el botón de disparo no está presionado.
     public float m_MaxLaunchForce = 80f;        // La fuerza dada al proyectil si el botón de disparo está presionado durante el tiempo máximo.
@@ -50,7 +51,7 @@ public class TankShooting : MonoBehaviour
 
     private void Update()
     {
-        if (m_PlayerNumber <= 2)
+        if ((m_scene== 1 && m_PlayerNumber <= 2) || (m_scene > 1 && m_PlayerNumber == 1))
         {
             // Lógica de disparo manual para jugadores controlados
             m_AimSlider.value = m_MinLaunchForce;
@@ -77,7 +78,7 @@ public class TankShooting : MonoBehaviour
                 Fire();
             }
         }
-        else
+        else if(m_scene != 4)
         {
             // Lógica para tanques controlados por IA
             if (goal != null)

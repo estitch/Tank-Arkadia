@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Flock : MonoBehaviour
 {
+    public CameraControl m_CameraControl;
+    
     [Header("Spawn Setup")]
     [SerializeField] private FlockUnit flockUnitPrefab;
     [SerializeField] private int flockSize;
@@ -81,6 +83,18 @@ public class Flock : MonoBehaviour
 
     private void GenerateUnits()
     {
+        int currentTargetCount = m_CameraControl.m_Targets.Length;
+        
+        int additionalTargetCount = flockSize;
+        Transform[] newTargets = new Transform[currentTargetCount + additionalTargetCount];
+        if (m_CameraControl != null) {
+
+            // Copiamos los objetivos existentes (tanques)
+            for (int j = 0; j < currentTargetCount; j++)
+            {
+                newTargets[j] = m_CameraControl.m_Targets[j];
+            }
+        }
         allUnits = new FlockUnit[flockSize];
         for (int i = 0; i < flockSize; i++)
         {
@@ -91,6 +105,12 @@ public class Flock : MonoBehaviour
             allUnits[i] = Instantiate(flockUnitPrefab, spawnPosition, rotation);
             allUnits[i].AssignFlock(this);
             allUnits[i].InitializeSpeed(UnityEngine.Random.Range(minSpeed, maxSpeed));
+
+            if (m_CameraControl != null) {
+                newTargets[currentTargetCount + i] = allUnits[i].myTransform;
+            }
         }
+
+        m_CameraControl.m_Targets = newTargets;
     }
 }

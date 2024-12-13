@@ -631,6 +631,10 @@ PrefabInstance:
       propertyPath: m_Shadows.m_NormalBias
       value: 0.14
       objectReference: {fileID: 0}
+    - target: {fileID: 2836455716549362386, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4077698744126141037, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1616,7 +1620,7 @@ MonoBehaviour:
     goal: {fileID: 0}
     waypoints: []
     m_Movement: {fileID: 0}
-  m_scene: 1
+  m_scene: 3
   waypoints:
   - {fileID: 2038302259}
   - {fileID: 1212153480}
@@ -2107,7 +2111,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1108775404
 MonoBehaviour:
   m_ObjectHideFlags: 0

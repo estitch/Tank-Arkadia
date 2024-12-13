@@ -1186,15 +1186,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd208e98e42548498dbbf624012fa29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CameraControl: {fileID: 1100960387}
   flockUnitPrefab: {fileID: 1879810352389984329, guid: c7f49a7255e1217479951692d5726db8, type: 3}
   flockSize: 7
-  spawnBounds: {x: 124.05, y: 5, z: 10}
+  spawnBounds: {x: 12, y: 5, z: 10}
   _minSpeed: 2
   _maxSpeed: 1
-  _cohesionDistance: 5
-  _avoidanceDistance: 2
+  _cohesionDistance: 0.97
+  _avoidanceDistance: 1.6
   _aligementDistance: 2
-  _obstacleDistance: 7
+  _obstacleDistance: 7.74
   _boundsDistance: 20
   _cohesionWeight: 2
   _avoidanceWeight: 1
