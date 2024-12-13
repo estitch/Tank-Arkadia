@@ -56,24 +56,25 @@ public class TankMovement : MonoBehaviour
 
     private void Start()
     {
+
         m_MovementAxisName = "Vertical" + m_PlayerNumber;
         m_TurnAxisName = "Horizontal" + m_PlayerNumber;
 
         m_OriginalPitch = m_MovementAudio.pitch;
 
-        if (m_PlayerNumber > 2)
+        if (m_PlayerNumber > 2 && m_scene != 4)
         {
             this.transform.LookAt(goal.position);
         }
 
-        //print("asdasdasd "+m_scene);
+        print("asdasdasd "+m_scene);
     }
 
 
     private void Update()
     {
         // Store the player's input and make sure the audio for the engine is playing.
-        if (m_PlayerNumber <= 2)
+        if (m_scene == 1 && (m_PlayerNumber == 2 || m_PlayerNumber == 1))
         {
             //print(m_MovementAxisName);
             //print(m_TurnAxisName);
@@ -82,7 +83,16 @@ public class TankMovement : MonoBehaviour
 
             EngineAudio();
         }
-        else if (m_scene == 2)
+        else if (m_scene >= 2 &&  m_PlayerNumber == 1)
+        {
+            //print(m_MovementAxisName);
+            //print(m_TurnAxisName);
+            m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
+            m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
+
+            EngineAudio();
+        }
+        else if (m_scene == 3)
         {
             if (Vector3.Distance(this.transform.position, waypoints[currentWP].transform.position) < 3) currentWP++;
             if (currentWP >= waypoints.Length) currentWP = 0;
@@ -94,7 +104,7 @@ public class TankMovement : MonoBehaviour
 
     void LateUpdate()
     {
-        if (m_PlayerNumber > 2 && m_scene != 2)
+        if ((m_PlayerNumber > 1 && m_scene == 2) || ((m_PlayerNumber > 2 && m_scene == 1)))
         {
             this.transform.LookAt(goal.position);
             Vector3 direction = goal.position - this.transform.position;

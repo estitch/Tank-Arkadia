@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public int m_NumRoundsToWin = 5;            // The number of rounds a single player has to win to win the game.
+    
     public float m_StartDelay = 3f;             // The delay between the start of RoundStarting and RoundPlaying phases.
     public float m_EndDelay = 3f;               // The delay between the end of RoundPlaying and RoundEnding phases.
     public CameraControl m_CameraControl;       // Reference to the CameraControl script for control during different phases.
@@ -62,13 +63,22 @@ public class GameManager : MonoBehaviour
             m_Tanks[i].waypoints = waypoints;
 
             // Asigna objetivos según el índice.
-            if (i > 1 && i < 5)
+
+            if (m_scene == 1) {
+                if (i > 1 && i < 5)
+                {
+                    m_Tanks[i].goal = m_Tanks[1].m_Instance.transform;
+                }
+                else if (i > 4 && i < 8)
+                {
+                    m_Tanks[i].goal = m_Tanks[0].m_Instance.transform;
+                }
+            }else if (m_scene >= 2 && m_scene != 4)
             {
-                m_Tanks[i].goal = m_Tanks[1].m_Instance.transform;
-            }
-            else if (i > 4 && i < 8)
-            {
-                m_Tanks[i].goal = m_Tanks[0].m_Instance.transform;
+                if (i > 0)
+                {
+                    m_Tanks[i].goal = m_Tanks[0].m_Instance.transform;
+                }
             }
 
             // Configura el tanque.
@@ -199,7 +209,14 @@ public class GameManager : MonoBehaviour
         }
 
         // If there are one or fewer tanks remaining return true, otherwise return false.
-        return numTanksLeft <= 1;
+        if (m_scene == 4)
+        {
+            return numTanksLeft < 1;
+        }
+        else {
+            return numTanksLeft <= 1;
+        }
+        
     }
 
 

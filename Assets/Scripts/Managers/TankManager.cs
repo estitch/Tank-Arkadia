@@ -53,6 +53,7 @@ public class TankManager
         m_Shooting.goal = goal;
 
         m_Movement.m_scene = m_scene;
+        m_Shooting.m_scene = m_scene;
         m_Movement.waypoints = waypoints;
 
         m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + ">PLAYER " + m_PlayerNumber + "</color>";
