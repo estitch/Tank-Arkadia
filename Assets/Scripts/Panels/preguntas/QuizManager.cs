@@ -63,6 +63,6 @@ public class QuizManager : MonoBehaviour
 
         OnQuestionAnswered?.Invoke(isCorrect);
 
-        Invoke(nameof(ResumeGame), 0f); // Espera 1 segundo antes de reanudar el juego
+        Invoke(nameof(ResumeGame), 0.4f); // Espera 1 segundo antes de reanudar el juego
     }
 }

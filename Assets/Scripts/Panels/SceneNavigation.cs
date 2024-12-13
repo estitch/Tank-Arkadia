@@ -11,17 +11,21 @@ public class SceneNavigation : MonoBehaviour
 
     public void GoToLevel1()
     {
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene("Nivel 1");
     }
 
     public void GoToLevel2()
     {
-        SceneManager.LoadScene("Level 2");
+        SceneManager.LoadScene("Nivel 2");
     }
 
     public void GoToLevel3()
     {
-        SceneManager.LoadScene("Level 3");
+        SceneManager.LoadScene("Nivel 3");
+    }
+    public void GoToLevelTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
     }
 
     // Opcional: Método para salir del juego
