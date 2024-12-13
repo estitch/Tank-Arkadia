@@ -63,4 +63,11 @@ public class TankHUDManager : MonoBehaviour
             Debug.Log($"Actualización de balas: {currentBullets} / {maxBullets}");
         }
     }
+    public void SetTankReferences(TankHealth health, TankMovement movement, TankShooting shooting)
+    {
+        tankHealth = health;
+        tankMovement = movement;
+        tankShooting = shooting;
+    }
+
 }

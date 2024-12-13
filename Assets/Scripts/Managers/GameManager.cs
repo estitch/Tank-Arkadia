@@ -1,7 +1,8 @@
 ﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
 
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public int m_NumRoundsToWin = 5;            // The number of rounds a single player has to win to win the game.
@@ -20,7 +21,9 @@ public class GameManager : MonoBehaviour
     private WaitForSeconds m_EndWait;           // Used to have a delay whilst the round or game ends.
     private TankManager m_RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
     private TankManager m_GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
-
+    public GameObject m_SpecialTankPrefab;  // Prefab para el tanque especial
+    public GameObject gameOverPanel;  // El panel de GameOver (cartel con mensaje y botón).
+    public Camera gameOverCamera;  // Cámara estática para el Game Over
 
     private void Start()
     {
@@ -40,14 +43,21 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < m_Tanks.Length; i++)
         {
-            if (m_TankPrefab == null)
+            GameObject tankToSpawn;
+
+            // Si es el primer tanque, usa el prefab especial
+            if (i == 0 && m_SpecialTankPrefab != null)
             {
-                Debug.LogError("El prefab del tanque (m_TankPrefab) no está asignado.");
-                continue;
+                tankToSpawn = m_SpecialTankPrefab;
+            }
+            else
+            {
+                tankToSpawn = m_TankPrefab;
             }
 
+            // Instanciar el tanque
             m_Tanks[i].m_Instance = Instantiate(
-                m_TankPrefab,
+                tankToSpawn,
                 m_Tanks[i].m_SpawnPoint.position,
                 m_Tanks[i].m_SpawnPoint.rotation
             );
@@ -58,13 +68,13 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
+            // Configurar el tanque
             m_Tanks[i].m_PlayerNumber = i + 1;
             m_Tanks[i].m_scene = m_scene;
             m_Tanks[i].waypoints = waypoints;
 
-            // Asigna objetivos según el índice.
-
-            if (m_scene == 1) {
+            if (m_scene == 1)
+            {
                 if (i > 1 && i < 5)
                 {
                     m_Tanks[i].goal = m_Tanks[1].m_Instance.transform;
@@ -73,7 +83,8 @@ public class GameManager : MonoBehaviour
                 {
                     m_Tanks[i].goal = m_Tanks[0].m_Instance.transform;
                 }
-            }else if (m_scene >= 2 && m_scene != 4)
+            }
+            else if (m_scene >= 2 && m_scene != 4)
             {
                 if (i > 0)
                 {
@@ -81,10 +92,37 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            // Configura el tanque.
+            // Si es el tanque especial, conectamos el HUD
+            if (i == 0 && m_Tanks[i].m_Instance != null)
+            {
+                // Obtener el TankHUDManager desde el Canvas
+                TankHUDManager tankHUDManager = FindObjectOfType<TankHUDManager>();
+
+                if (tankHUDManager != null)
+                {
+                    // Obtener los componentes del tanque especial
+                    TankHealth tankHealth = m_Tanks[i].m_Instance.GetComponent<TankHealth>();
+                    TankMovement tankMovement = m_Tanks[i].m_Instance.GetComponent<TankMovement>();
+                    TankShooting tankShooting = m_Tanks[i].m_Instance.GetComponent<TankShooting>();
+
+                    // Asignar los componentes al TankHUDManager
+                    tankHUDManager.tankHealth = tankHealth;
+                    tankHUDManager.tankMovement = tankMovement;
+                    tankHUDManager.tankShooting = tankShooting;
+
+                    Debug.Log("Conectando el HUD al tanque especial");
+                }
+                else
+                {
+                    Debug.LogError("No se encontró un TankHUDManager en la escena.");
+                }
+            }
+
+            // Configura el tanque
             m_Tanks[i].Setup();
         }
     }
+
 
 
 
@@ -305,5 +343,44 @@ public class GameManager : MonoBehaviour
         {
             m_Tanks[i].DisableControl();
         }
+    }
+    private void Update()
+    {
+        // Verificar si el tanque especial ha muerto
+        if (IsSpecialTankDead())
+        {
+            // Detener el juego y mostrar el cartel
+            StopGame();
+        }
+    }
+    // Verificar si el tanque especial está muerto
+    private bool IsSpecialTankDead()
+    {
+        if (m_Tanks.Length > 0)
+        {
+            TankHealth specialTankHealth = m_Tanks[0].m_Instance.GetComponent<TankHealth>();
+            if (specialTankHealth != null && specialTankHealth.IsDead())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Detener el juego y mostrar el panel de fin
+    private void StopGame()
+    {
+        // Detener todos los componentes de juego (puedes ajustar esto según tu lógica)
+        gameOverCamera.gameObject.SetActive(true);
+        foreach (var tank in m_Tanks)
+        {
+            tank.m_Movement.enabled = false;
+ 
+        }
+
+        // Activar el panel de fin de juego
+        gameOverPanel.SetActive(true);
+
+   
     }
 }

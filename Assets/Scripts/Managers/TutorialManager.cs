@@ -53,6 +53,7 @@ public class TutorialManager : MonoBehaviour
 
     private void StartPhase(int phase)
     {
+        Debug.Log(phase);
         switch (phase)
         {
             case 0:
