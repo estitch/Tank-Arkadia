@@ -1,18 +1,27 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class SceneNavigation : MonoBehaviour
 {
     // Métodos para cambiar de escena
-    public void GoToGeneralScene()
+    public void GoToMainMenu()
     {
-        SceneManager.LoadScene("general-scene");
+        SceneManager.LoadScene("Main Menu");
     }
 
-    public void GoToTutorialScene()
+    public void GoToLevel1()
     {
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene("Level 1");
+    }
+
+    public void GoToLevel2()
+    {
+        SceneManager.LoadScene("Level 2");
+    }
+
+    public void GoToLevel3()
+    {
+        SceneManager.LoadScene("Level 3");
     }
 
     // Opcional: Método para salir del juego

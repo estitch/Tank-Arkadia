@@ -1,0 +1,224 @@
+{
+  "questions": [
+    {
+      "question": "¿Cuál palabra no pertenece al grupo: cat, dog, bird, banana?",
+      "options": ["Cat", "Dog", "Bird", "Banana"],
+      "answer": "Banana"
+    },
+    {
+      "question": "Elige el antónimo correcto de la palabra 'happy':",
+      "options": ["Sad", "Joyful", "Excited", "Glad"],
+      "answer": "Sad"
+    },
+    {
+      "question": "Encuentra la palabra que está mal escrita:",
+      "options": ["Apple", "Banana", "Cherrry", "Orange"],
+      "answer": "Cherrry"
+    },
+    {
+      "question": "Completa la oración: She is as quiet as a ___.",
+      "options": ["Mouse", "Lion", "Dog", "Elephant"],
+      "answer": "Mouse"
+    },
+    {
+      "question": "¿Cuál palabra no pertenece al grupo: shirt, pants, dress, apple?",
+      "options": ["Shirt", "Pants", "Dress", "Apple"],
+      "answer": "Apple"
+    },
+    {
+      "question": "Elige el sinónimo correcto de la palabra 'big':",
+      "options": ["Large", "Small", "Tiny", "Little"],
+      "answer": "Large"
+    },
+    {
+      "question": "¿Cuál palabra está mal escrita?",
+      "options": ["Friend", "Helo", "School", "Teacher"],
+      "answer": "Helo"
+    },
+    {
+      "question": "Completa la oración: The opposite of 'hot' is ___.",
+      "options": ["Cold", "Warm", "Cool", "Soft"],
+      "answer": "Cold"
+    },
+    {
+      "question": "¿Cuál palabra no pertenece al grupo: table, chair, apple, bed?",
+      "options": ["Table", "Chair", "Apple", "Bed"],
+      "answer": "Apple"
+    },
+    {
+      "question": "Elige la palabra que significa lo mismo que 'small':",
+      "options": ["Tiny", "Big", "Huge", "Large"],
+      "answer": "Tiny"
+    },
+    {
+      "question": "¿Cuál palabra está mal escrita?",
+      "options": ["Banana", "Oranje", "Strawberry", "Grapes"],
+      "answer": "Oranje"
+    },
+    {
+      "question": "Completa la oración: She runs as fast as a ___.",
+      "options": ["Cheetah", "Snail", "Elephant", "Dog"],
+      "answer": "Cheetah"
+    },
+    {
+      "question": "¿Cuál palabra no pertenece al grupo: car, bus, plane, carrot?",
+      "options": ["Car", "Bus", "Plane", "Carrot"],
+      "answer": "Carrot"
+    },
+    {
+      "question": "Elige el antónimo correcto de la palabra 'fast':",
+      "options": ["Quick", "Slow", "Speedy", "Rapid"],
+      "answer": "Slow"
+    },
+    {
+      "question": "¿Cuál palabra está mal escrita?",
+      "options": ["Animal", "Amimal", "Garden", "School"],
+      "answer": "Amimal"
+    },
+    {
+      "question": "Completa la oración: The opposite of 'day' is ___.",
+      "options": ["Night", "Morning", "Afternoon", "Evening"],
+      "answer": "Night"
+    },
+    {
+      "question": "¿Cuál palabra no pertenece al grupo: pen, pencil, book, pizza?",
+      "options": ["Pen", "Pencil", "Book", "Pizza"],
+      "answer": "Pizza"
+    },
+    {
+      "question": "Elige el sinónimo correcto de la palabra 'happy':",
+      "options": ["Sad", "Joyful", "Angry", "Upset"],
+      "answer": "Joyful"
+    },
+    {
+      "question": "¿Cuál palabra está mal escrita?",
+      "options": ["House", "Chimney", "Roof", "Rooff"],
+      "answer": "Rooff"
+    },
+    {
+      "question": "Completa la oración: The sun rises in the ___.",
+      "options": ["East", "West", "North", "South"],
+      "answer": "East"
+    },
+    {
+      "question": "¿Cuál palabra no pertenece al grupo: dog, cat, tiger, carrot?",
+      "options": ["Dog", "Cat", "Tiger", "Carrot"],
+      "answer": "Carrot"
+    },
+    {
+      "question": "Elige la palabra que significa lo mismo que 'quick':",
+      "options": ["Fast", "Slow", "Heavy", "Late"],
+      "answer": "Fast"
+    },
+    {
+      "question": "¿Cuál palabra está mal escrita?",
+      "options": ["Garden", "Flower", "Leef", "Tree"],
+      "answer": "Leef"
+    },
+    {
+      "question": "Completa la oración: The opposite of 'full' is ___.",
+      "options": ["Empty", "Complete", "Large", "Big"],
+      "answer": "Empty"
+    },
+    {
+      "question": "¿Cuál palabra no pertenece al grupo: red, blue, green, table?",
+      "options": ["Red", "Blue", "Green", "Table"],
+      "answer": "Table"
+    },
+    {
+      "question": "Elige el sinónimo correcto de la palabra 'angry':",
+      "options": ["Happy", "Upset", "Joyful", "Excited"],
+      "answer": "Upset"
+    },
+    {
+      "question": "¿Cuál palabra está mal escrita?",
+      "options": ["Door", "Window", "Wall", "Roofe"],
+      "answer": "Roofe"
+    },
+    {
+      "question": "Completa la oración: The opposite of 'soft' is ___.",
+      "options": ["Hard", "Smooth", "Quiet", "Light"],
+      "answer": "Hard"
+    },
+    {
+      "question": "¿Cuál palabra no pertenece al grupo: apple, orange, car, banana?",
+      "options": ["Apple", "Orange", "Car", "Banana"],
+      "answer": "Car"
+    },
+    {
+      "question": "Elige la palabra que significa lo mismo que 'smart':",
+      "options": ["Clever", "Dull", "Slow", "Lazy"],
+      "answer": "Clever"
+    },
+    {
+      "question": "¿Cuál palabra está mal escrita?",
+      "options": ["Street", "Bulding", "Bridge", "Road"],
+      "answer": "Bulding"
+    },
+    {
+      "question": "Completa la oración: The sky is ___.",
+      "options": ["Blue", "Green", "Yellow", "Red"],
+      "answer": "Blue"
+    },
+    {
+      "question": "¿Cuál palabra no pertenece al grupo: milk, juice, water, chair?",
+      "options": ["Milk", "Juice", "Water", "Chair"],
+      "answer": "Chair"
+    },
+    {
+      "question": "Elige el antónimo correcto de la palabra 'short':",
+      "options": ["Tall", "Tiny", "Small", "Little"],
+      "answer": "Tall"
+    },
+    {
+      "question": "¿Cuál palabra está mal escrita?",
+      "options": ["Ball", "Bat", "Net", "Goale"],
+      "answer": "Goale"
+    },
+    {
+      "question": "Completa la oración: The opposite of 'slow' is ___.",
+      "options": ["Fast", "Lazy", "Quiet", "Smooth"],
+      "answer": "Fast"
+    },
+    {
+      "question": "¿Cuál palabra no pertenece al grupo: soccer, basketball, cake, tennis?",
+      "options": ["Soccer", "Basketball", "Cake", "Tennis"],
+      "answer": "Cake"
+    },
+    {
+      "question": "Elige la palabra que significa lo mismo que 'funny':",
+      "options": ["Amusing", "Serious", "Boring", "Dull"],
+      "answer": "Amusing"
+    },
+    {
+      "question": "¿Cuál palabra está mal escrita?",
+      "options": ["Cat", "Dogg", "Fish", "Bird"],
+      "answer": "Dogg"
+    },
+    {
+      "question": "Completa la oración: The grass is ___.",
+      "options": ["Green", "Blue", "Purple", "Yellow"],
+      "answer": "Green"
+    },
+    {
+      "question": "¿Cuál palabra no pertenece al grupo: tea, coffee, juice, pen?",
+      "options": ["Tea", "Coffee", "Juice", "Pen"],
+      "answer": "Pen"
+    },
+    {
+      "question": "Elige el sinónimo correcto de la palabra 'kind':",
+      "options": ["Nice", "Mean", "Rude", "Angry"],
+      "answer": "Nice"
+    },
+    {
+      "question": "¿Cuál palabra está mal escrita?",
+      "options": ["Tree", "Leaf", "Branche", "Root"],
+      "answer": "Branche"
+    },
+    {
+      "question": "Completa la oración: The opposite of 'loud' is ___.",
+      "options": ["Quiet", "Noisy", "Soft", "Hard"],
+      "answer": "Quiet"
+    }
+  ]
+}
