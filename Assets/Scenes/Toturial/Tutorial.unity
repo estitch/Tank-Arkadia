@@ -180,6 +180,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 740735315}
     m_Modifications:
+    - target: {fileID: 79950207190007440, guid: 819faf1aa6e263f40848f8c7e5434ba8, type: 3}
+      propertyPath: quizPanel
+      value: 
+      objectReference: {fileID: 1931159795}
     - target: {fileID: 4127827816903069447, guid: 819faf1aa6e263f40848f8c7e5434ba8, type: 3}
       propertyPath: m_Height
       value: 2.3181386
@@ -1014,6 +1018,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7250151610907683589, guid: 909e5719f46e52542ae6b3bbcb0d5448, type: 3}
+      propertyPath: quizPanel
+      value: 
+      objectReference: {fileID: 1931159795}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 909e5719f46e52542ae6b3bbcb0d5448, type: 3}
 --- !u!1001 &235684893
@@ -1716,6 +1724,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 740735315}
     m_Modifications:
+    - target: {fileID: 79950207190007440, guid: 819faf1aa6e263f40848f8c7e5434ba8, type: 3}
+      propertyPath: quizPanel
+      value: 
+      objectReference: {fileID: 1931159795}
     - target: {fileID: 4127827816903069447, guid: 819faf1aa6e263f40848f8c7e5434ba8, type: 3}
       propertyPath: m_Height
       value: 0.71540153
@@ -2655,6 +2667,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpeedPowerUp
       objectReference: {fileID: 0}
+    - target: {fileID: 2085993038125185674, guid: c2b599903e885ca448c8c94569583796, type: 3}
+      propertyPath: quizPanel
+      value: 
+      objectReference: {fileID: 1931159795}
     - target: {fileID: 2924171027141476552, guid: c2b599903e885ca448c8c94569583796, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -6368,6 +6384,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7250151610907683589, guid: 909e5719f46e52542ae6b3bbcb0d5448, type: 3}
+      propertyPath: quizPanel
+      value: 
+      objectReference: {fileID: 1931159795}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 909e5719f46e52542ae6b3bbcb0d5448, type: 3}
 --- !u!1 &1469725696
@@ -9556,7 +9576,7 @@ PrefabInstance:
       objectReference: {fileID: 301096896}
     - target: {fileID: 3931491125510357595, guid: b04edc8826f498649aca52460a687d9a, type: 3}
       propertyPath: totalCheckpoints
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3931491125510357595, guid: b04edc8826f498649aca52460a687d9a, type: 3}
       propertyPath: totalCheckpointsText

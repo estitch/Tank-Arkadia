@@ -7,51 +7,44 @@ public class AmmoPowerUp : PowerUpBase
 
     [Header("Quiz Manager")]
     public GameObject quizPanel; // Panel de preguntas
-    private TankHealth currentTankHealth;
-    private TankMovement tankMovement;
-    private TankShooting tankShooting;
+    private TankShooting currentTankShooting;
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Tank")) return; // Solo interactúa con tanques
 
         Debug.Log("Power-up de munición activado");
-        TankHealth tankHealth = other.GetComponent<TankHealth>();
+        currentTankShooting = other.GetComponent<TankShooting>(); // Obtén el componente de disparo
 
-        if (tankHealth != null)
+        if (quizPanel != null)
         {
-            currentTankHealth = tankHealth;
+            quizPanel.SetActive(true);
 
-            if (quizPanel != null)
+            QuizManager quizManager = quizPanel.GetComponent<QuizManager>();
+            QuizLoader quizLoader = quizPanel.GetComponent<QuizLoader>();
+
+            if (quizManager != null && quizLoader != null)
             {
-                quizPanel.SetActive(true);
-
-                QuizManager quizManager = quizPanel.GetComponent<QuizManager>();
-                QuizLoader quizLoader = quizPanel.GetComponent<QuizLoader>();
-
-                if (quizManager != null && quizLoader != null)
-                {
-                    quizManager.OnQuestionAnswered -= HandleQuizResult; // Evita duplicación de eventos
-                    quizManager.OnQuestionAnswered += HandleQuizResult;
-                    quizLoader.LoadRandomQuestion();
-                }
-                else
-                {
-                    Debug.LogWarning("QuizManager o QuizLoader no están asignados.");
-                }
+                quizManager.OnQuestionAnswered -= HandleQuizResult; // Evita duplicación de eventos
+                quizManager.OnQuestionAnswered += HandleQuizResult;
+                quizLoader.LoadRandomQuestion();
             }
             else
             {
-                Debug.LogWarning("El panel de preguntas no está asignado.");
+                Debug.LogWarning("QuizManager o QuizLoader no están asignados.");
             }
+        }
+        else
+        {
+            Debug.LogWarning("El panel de preguntas no está asignado.");
         }
     }
 
     private void HandleQuizResult(bool isCorrect)
     {
-        if (isCorrect && currentTankHealth != null)
+        if (isCorrect && currentTankShooting != null)
         {
-            ApplyEffect(currentTankHealth, tankMovement, tankShooting);
+            ApplyEffect(null, null, currentTankShooting);
         }
 
         QuizManager quizManager = quizPanel.GetComponent<QuizManager>();
