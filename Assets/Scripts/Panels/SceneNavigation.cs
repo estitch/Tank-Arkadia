@@ -26,7 +26,7 @@ public class SceneNavigation : MonoBehaviour
     public void GoToLevel2()
     {
         ResetTimeScale();
-        SceneManager.LoadScene("Nivel 2");
+        SceneManager.LoadScene("Nivel 4");
     }
 
     public void GoToLevel3()
