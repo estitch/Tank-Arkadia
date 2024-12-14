@@ -31,7 +31,7 @@ public class QuizManager : MonoBehaviour
 
     public void DisplayQuestion(string question, string[] options, string correctAnswer)
     {
-        PauseGame(); // Pausa el juego cuando se muestra una nueva pregunta
+        PauseGame();
 
         questionText.text = question;
 
@@ -48,12 +48,18 @@ public class QuizManager : MonoBehaviour
             }
             else
             {
-                answerButtons[i].gameObject.SetActive(false);
+                answerButtons[i].gameObject.SetActive(false); // Desactiva botones adicionales
             }
+        }
+
+        if (options.Length > answerButtons.Count)
+        {
+            Debug.LogWarning("Hay más opciones que botones configurados.");
         }
 
         resultText.text = ""; // Limpia mensajes previos
     }
+
 
     private void CheckAnswer(string selectedOption, string correctAnswer)
     {
@@ -63,6 +69,7 @@ public class QuizManager : MonoBehaviour
 
         OnQuestionAnswered?.Invoke(isCorrect);
 
-        Invoke(nameof(ResumeGame), 0.4f); // Espera 1 segundo antes de reanudar el juego
+        Invoke(nameof(ResumeGame), 0f); // Reanuda el juego tras 1 segundo
     }
+
 }

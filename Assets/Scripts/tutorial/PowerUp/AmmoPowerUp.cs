@@ -10,6 +10,7 @@ public class AmmoPowerUp : PowerUpBase
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("power up Balas");
         TankHealth tankHealth = other.GetComponent<TankHealth>();
 
         if (tankHealth != null)

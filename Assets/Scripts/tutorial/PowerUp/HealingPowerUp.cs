@@ -11,6 +11,7 @@ public class HealingPowerUp : PowerUpBase
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("power up salud");
         TankHealth tankHealth = other.GetComponent<TankHealth>();
 
         if (tankHealth != null)

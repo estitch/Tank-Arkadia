@@ -4,27 +4,39 @@ using UnityEngine.SceneManagement;
 public class SceneNavigation : MonoBehaviour
 {
     // Métodos para cambiar de escena
+    void ResetTimeScale()
+    {
+        Time.timeScale = 1f; // Restablece la velocidad del tiempo a la normalidad
+    }
+
+    // Llamar antes de cambiar de escena
+
     public void GoToMainMenu()
     {
+        ResetTimeScale();
         SceneManager.LoadScene("Main Menu");
     }
 
     public void GoToLevel1()
     {
-        SceneManager.LoadScene("Nivel 1");
+        ResetTimeScale();
+        SceneManager.LoadScene("Nivel 3");
     }
 
     public void GoToLevel2()
     {
+        ResetTimeScale();
         SceneManager.LoadScene("Nivel 2");
     }
 
     public void GoToLevel3()
     {
-        SceneManager.LoadScene("Nivel 3");
+        ResetTimeScale();
+        SceneManager.LoadScene("Nivel 1");
     }
     public void GoToLevelTutorial()
     {
+        ResetTimeScale();
         SceneManager.LoadScene("Tutorial");
     }
 

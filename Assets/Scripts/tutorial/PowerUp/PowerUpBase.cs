@@ -11,22 +11,19 @@ public abstract class PowerUpBase : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Detecta si el objeto que colisiona tiene el tag "Tank".
         if (other.CompareTag("Tank"))
         {
-            // Busca los componentes del tanque.
             TankHealth tankHealth = other.GetComponent<TankHealth>();
             TankMovement tankMovement = other.GetComponent<TankMovement>();
             TankShooting tankShooting = other.GetComponent<TankShooting>();
 
-            // Aplica el efecto correspondiente.
             ApplyEffect(tankHealth, tankMovement, tankShooting);
-            OnPowerUpCollected?.Invoke(gameObject);  // Llama al evento, pasando el power-up que fue recogido
+            OnPowerUpCollected?.Invoke(gameObject);
 
-            // Maneja la recogida del power-up.
-            OnPickup();
+            OnPickup(); // Desaparece tras la recogida
         }
     }
+
 
     // Método que aplica el efecto al tanque.
     protected abstract void ApplyEffect(TankHealth health, TankMovement movement, TankShooting shooting);

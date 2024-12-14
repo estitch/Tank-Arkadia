@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 1007953524}
   - component: {fileID: 1007953527}
   m_Layer: 5
-  m_Name: Boton-Comenzar
+  m_Name: Boton-Nivel 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1267,7 +1267,7 @@ GameObject:
   - component: {fileID: 1366745836}
   - component: {fileID: 1366745835}
   m_Layer: 5
-  m_Name: Boton-Comenzar (2)
+  m_Name: Boton-Nivel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1360,7 +1360,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 907830949}
         m_TargetAssemblyTypeName: SceneNavigation, Assembly-CSharp
-        m_MethodName: GoToLevel1
+        m_MethodName: GoToLevel3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1953,7 +1953,7 @@ GameObject:
   - component: {fileID: 1620873072}
   - component: {fileID: 1620873071}
   m_Layer: 5
-  m_Name: Boton-Comenzar (1)
+  m_Name: Boton-Nivel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

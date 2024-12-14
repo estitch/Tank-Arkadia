@@ -10,6 +10,7 @@ public class SpeedPowerUp : PowerUpBase
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("power up velocidad");
         TankHealth tankHealth = other.GetComponent<TankHealth>();
 
         if (tankHealth != null)

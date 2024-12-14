@@ -30,12 +30,18 @@ public class GameManager : MonoBehaviour
         // Create the delays so they only have to be made once.
         m_StartWait = new WaitForSeconds (m_StartDelay);
         m_EndWait = new WaitForSeconds (m_EndDelay);
+        // Asegúrate de que las referencias se restablezcan al iniciar la escena
+        if (m_Tanks == null || m_Tanks.Length == 0)
+        {
+            m_Tanks = new TankManager[8]; // o el número correcto de tanques
+        }
 
         SpawnAllTanks();
         SetCameraTargets();
 
         // Once the tanks have been created and the camera is using them as targets, start the game.
         StartCoroutine (GameLoop ());
+
     }
 
 
@@ -168,6 +174,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine (GameLoop ());
         }
     }
+
 
 
     private IEnumerator RoundStarting ()
@@ -346,17 +353,21 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        // Verificar si el tanque especial ha muerto
-        if (IsSpecialTankDead())
+        if (m_Tanks != null && m_Tanks.Length > 0)
         {
-            // Detener el juego y mostrar el cartel
-            StopGame();
+            // Verifica si el tanque especial ha muerto
+            if (IsSpecialTankDead())
+            {
+                // Detener el juego y mostrar el cartel
+                StopGame();
+            }
         }
     }
+
     // Verificar si el tanque especial está muerto
     private bool IsSpecialTankDead()
     {
-        if (m_Tanks.Length > 0)
+        if (m_Tanks.Length > 0 && m_Tanks[0] != null && m_Tanks[0].m_Instance != null)
         {
             TankHealth specialTankHealth = m_Tanks[0].m_Instance.GetComponent<TankHealth>();
             if (specialTankHealth != null && specialTankHealth.IsDead())
@@ -366,6 +377,7 @@ public class GameManager : MonoBehaviour
         }
         return false;
     }
+
 
     // Detener el juego y mostrar el panel de fin
     private void StopGame()
@@ -383,4 +395,20 @@ public class GameManager : MonoBehaviour
 
    
     }
+    // Reinicia la escena actual
+  
+    private void OnDisable()
+    {
+        for (int i = 0; i < m_Tanks.Length; i++)
+        {
+            if (m_Tanks[i] != null && m_Tanks[i].m_Instance != null)
+            {
+                Destroy(m_Tanks[i].m_Instance);
+                m_Tanks[i].m_Instance = null;
+            }
+        }
+    }
+
+
+
 }
