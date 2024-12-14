@@ -8,6 +8,8 @@ public class AmmoPowerUp : PowerUpBase
     [Header("Quiz Manager")]
     public GameObject quizPanel; // Panel de preguntas
     private TankHealth currentTankHealth;
+    private TankMovement tankMovement;
+    private TankShooting tankShooting;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -49,7 +51,7 @@ public class AmmoPowerUp : PowerUpBase
     {
         if (isCorrect && currentTankHealth != null)
         {
-            ApplyEffect(currentTankHealth, null, null);
+            ApplyEffect(currentTankHealth, tankMovement, tankShooting);
         }
 
         QuizManager quizManager = quizPanel.GetComponent<QuizManager>();
@@ -69,6 +71,12 @@ public class AmmoPowerUp : PowerUpBase
         {
             shooting.AddMaxBullets(ammoIncrease);
             Debug.Log($"Ammo max increased by {ammoIncrease}. Current Ammo: {shooting.GetCurrentBullets()}");
+
+            //// Actualiza solo la sección de velocidad del HUD.
+            //if (hudManager != null)
+            //{
+            //    hudManager.UpdateShooting(shooting);
+            //}
         }
     }
 }

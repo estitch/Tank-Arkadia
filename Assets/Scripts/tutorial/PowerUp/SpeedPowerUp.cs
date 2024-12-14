@@ -8,6 +8,10 @@ public class SpeedPowerUp : PowerUpBase
     [Header("Quiz Manager")]
     public GameObject quizPanel; // Panel de preguntas
     private TankHealth currentTankHealth;
+    private TankMovement tankMovement;
+    private TankShooting tankShooting;
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -49,7 +53,7 @@ public class SpeedPowerUp : PowerUpBase
     {
         if (isCorrect && currentTankHealth != null)
         {
-            ApplyEffect(currentTankHealth, null, null);
+            ApplyEffect(currentTankHealth, tankMovement, tankShooting);
         }
 
         QuizManager quizManager = quizPanel.GetComponent<QuizManager>();
@@ -69,6 +73,13 @@ public class SpeedPowerUp : PowerUpBase
         {
             movement.IncreaseSpeed(speedBoost);
             Debug.Log($"Speed increased by {speedBoost}. Current Speed: {movement.GetCurrentSpeed()}");
+
+
+            // Actualiza solo la sección de velocidad del HUD.
+            //if (hudManager != null)
+            //{
+            //    hudManager.UpdateSpeed(movement);
+            //}
         }
     }
 }
