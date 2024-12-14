@@ -4,13 +4,16 @@ public class SpeedPowerUp : PowerUpBase
 {
     [Header("Speed Settings")]
     public float speedBoost = 5f;
+
     [Header("Quiz Manager")]
     public GameObject quizPanel; // Panel de preguntas
     private TankHealth currentTankHealth;
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("power up velocidad");
+        if (!other.CompareTag("Tank")) return; // Solo interactúa con tanques
+
+        Debug.Log("Power-up de velocidad activado");
         TankHealth tankHealth = other.GetComponent<TankHealth>();
 
         if (tankHealth != null)
@@ -26,8 +29,13 @@ public class SpeedPowerUp : PowerUpBase
 
                 if (quizManager != null && quizLoader != null)
                 {
+                    quizManager.OnQuestionAnswered -= HandleQuizResult; // Evita duplicación de eventos
                     quizManager.OnQuestionAnswered += HandleQuizResult;
                     quizLoader.LoadRandomQuestion();
+                }
+                else
+                {
+                    Debug.LogWarning("QuizManager o QuizLoader no están asignados.");
                 }
             }
             else
@@ -50,26 +58,17 @@ public class SpeedPowerUp : PowerUpBase
             quizManager.OnQuestionAnswered -= HandleQuizResult;
         }
 
-        // Ocultar o desactivar el power-up después de responder la pregunta
-        gameObject.SetActive(false); // Desactiva el objeto del power-up
+        // Desactiva el panel y el power-up
+        quizPanel.SetActive(false);
+        gameObject.SetActive(false);
     }
 
-
-
-
-protected override void ApplyEffect(TankHealth health, TankMovement movement, TankShooting shooting)
+    protected override void ApplyEffect(TankHealth health, TankMovement movement, TankShooting shooting)
     {
         if (movement != null)
         {
             movement.IncreaseSpeed(speedBoost);
             Debug.Log($"Speed increased by {speedBoost}. Current Speed: {movement.GetCurrentSpeed()}");
-
-
-            // Actualiza solo la sección de velocidad del HUD.
-            //if (hudManager != null)
-            //{
-            //    hudManager.UpdateSpeed(movement);
-            //}
         }
     }
 }

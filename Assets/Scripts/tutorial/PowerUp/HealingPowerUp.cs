@@ -11,7 +11,8 @@ public class HealingPowerUp : PowerUpBase
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("power up salud");
+        if (!other.CompareTag("Tank")) return; // Solo interactúa con tanques
+
         TankHealth tankHealth = other.GetComponent<TankHealth>();
 
         if (tankHealth != null)
@@ -27,8 +28,13 @@ public class HealingPowerUp : PowerUpBase
 
                 if (quizManager != null && quizLoader != null)
                 {
+                    quizManager.OnQuestionAnswered -= HandleQuizResult; // Evita duplicación de eventos
                     quizManager.OnQuestionAnswered += HandleQuizResult;
                     quizLoader.LoadRandomQuestion();
+                }
+                else
+                {
+                    Debug.LogWarning("QuizManager o QuizLoader no están asignados.");
                 }
             }
             else
@@ -51,10 +57,10 @@ public class HealingPowerUp : PowerUpBase
             quizManager.OnQuestionAnswered -= HandleQuizResult;
         }
 
-        // Ocultar o desactivar el power-up después de responder la pregunta
-        gameObject.SetActive(false); // Desactiva el objeto del power-up
+        // Desactiva el panel y el power-up
+        quizPanel.SetActive(false);
+        gameObject.SetActive(false);
     }
-
 
     protected override void ApplyEffect(TankHealth health, TankMovement movement, TankShooting shooting)
     {
