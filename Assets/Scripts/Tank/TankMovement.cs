@@ -94,11 +94,51 @@ public class TankMovement : MonoBehaviour
         }
         else if (m_scene == 3)
         {
-            if (Vector3.Distance(this.transform.position, waypoints[currentWP].transform.position) < 3) currentWP++;
-            if (currentWP >= waypoints.Length) currentWP = 0;
+           
+            if (Vector3.Distance(this.transform.position, waypoints[currentWP].transform.position) < 3)
+            {
+                SelectNextWaypoint();
+            }
+
+            // Girar hacia el waypoint actual
             Quaternion lookatWP = Quaternion.LookRotation(waypoints[currentWP].transform.position - this.transform.position);
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, lookatWP, rotSpeed * Time.deltaTime);
+
+            // Moverse hacia adelante
             this.transform.Translate(0, 0, speed * Time.deltaTime);
+        }
+    }
+  
+
+    void SelectNextWaypoint()
+    {
+        int attempts = 0;
+        int previousWP = currentWP; // Guardar el waypoint actual para evitar repetirlo
+        bool waypointFound = false;
+
+        do
+        {
+            // Seleccionar un waypoint al azar
+            currentWP = Random.Range(0, waypoints.Length);
+
+            // Verificar si no es el mismo waypoint y si hay un camino despejado
+            Vector3 direction = waypoints[currentWP].transform.position - this.transform.position;
+            if (currentWP != previousWP && !Physics.Raycast(this.transform.position, direction.normalized, direction.magnitude))
+            {
+                waypointFound = true;
+                break;
+            }
+
+            // Incrementar intentos para evitar bucles infinitos
+            attempts++;
+
+        } while (attempts < waypoints.Length);
+
+        // Si no se encontró un waypoint accesible, moverse en una dirección temporal
+        if (!waypointFound)
+        {
+            Debug.LogWarning("No se encontró un waypoint accesible. Moviendo temporalmente...");
+            this.transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
     }
 

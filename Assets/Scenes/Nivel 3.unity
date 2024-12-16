@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44504905, g: 0.49464136, b: 0.5737399, a: 1}
+  m_IndirectSpecularColor: {r: 0.44504857, g: 0.4946407, b: 0.57373834, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4642,20 +4642,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CameraControl: {fileID: 1100960387}
   flockUnitPrefab: {fileID: 1879810352389984329, guid: c7f49a7255e1217479951692d5726db8, type: 3}
-  flockSize: 7
-  spawnBounds: {x: 12, y: 5, z: 10}
-  _minSpeed: 2
-  _maxSpeed: 1
-  _cohesionDistance: 1.38
-  _avoidanceDistance: 2
-  _aligementDistance: 2
-  _obstacleDistance: 7
-  _boundsDistance: 20
-  _cohesionWeight: 8.47
-  _avoidanceWeight: 1
-  _aligementWeight: 0
-  _boundsWeight: 10
-  _obstacleWeight: 100
+  flockSize: 10
+  spawnBounds: {x: 40, y: 5, z: 40}
+  _minSpeed: 3
+  _maxSpeed: 10
+  _cohesionDistance: 10
+  _avoidanceDistance: 10
+  _aligementDistance: 9
+  _obstacleDistance: 6
+  _boundsDistance: 18
+  _cohesionWeight: 2.2
+  _avoidanceWeight: 3.2
+  _aligementWeight: 10
+  _boundsWeight: 2
+  _obstacleWeight: 8
 --- !u!4 &1108775405
 Transform:
   m_ObjectHideFlags: 0
@@ -4664,7 +4664,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108775403}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.5, y: 14.7, z: 10}
+  m_LocalPosition: {x: 11.5, y: 25, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
