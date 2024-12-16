@@ -1,18 +1,17 @@
-# Tank Arcadia: Duel
+# Tank Arcadia
 
 ## Descripción del Proyecto
 
-Tank Arcadia: Duel es un videojuego innovador que fusiona la emoción de los juegos de disparos en primera persona con un enfoque educativo. El juego presenta un dinámico combate 1v1, donde los jugadores se enfrentan en batallas tácticas dentro de tanques mientras resuelven desafíos de trivia en inglés para ganar ventajas estratégicas. Este proyecto busca promover el aprendizaje del idioma inglés mientras los jugadores disfrutan de una experiencia de juego inmersiva y desafiante.
+Tank Arcadia es un videojuego que fusiona la emoción de los juegos de disparos y tactica en primera persona con un enfoque educativo. El juego presenta un dinámico combate , donde el jugador se enfrentara en batallas con otros tanques mientras resuelven desafíos de trivia en inglés para ganar ventajas estratégicas. Este proyecto busca promover el aprendizaje del idioma inglés y mejorar reflejos visuales, a parte de poner en practica la reacción rápida y agilidad mental.
 
 ## Objetivo
 
-El objetivo principal de **Tank Arcadia: Duel** es ofrecer una experiencia de juego que permita mejorar las habilidades en inglés mediante preguntas de razonamiento verbal, mientras los jugadores interactúan en un entorno competitivo, añadiendo un componente estratégico a la resolución de trivia.
+El objetivo principal de **Tank Arcadia** es ofrecer una experiencia de juego que permita mejorar las habilidades en inglés mediante preguntas de razonamiento verbal, mientras los jugadores interactúan en un entorno competitivo, añadiendo un componente estratégico a la resolución de trivia.
 
 ## Tecnologías Utilizadas
 
 - **Unity**: Para la creación del juego y su desarrollo.
 - **C#**: Lenguaje de programación principal utilizado en Unity.
-- **Google Docs**: Para documentar el proyecto y proporcionar manuales.
 
 ## Manual de Usuario
 
